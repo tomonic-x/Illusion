@@ -12,6 +12,8 @@ Illusion
 * アスキーコード、JIS X 0208 の Ambiguous な記号類、コンソール端末用の
   罫線素片とブロック要素を収録。
 
+![Illusion](https://github.com/tomonic-x/Illusion/raw/master/img/screenshot.png)
+
 
 ### 好みの日本語フォントとの組み合わせ
 
@@ -39,12 +41,16 @@ Unicode の East Asian Width の *曖昧 (Ambiguous)* と *中立 (Neutral)* に
 + Roboto Mono を半角幅に調整し、一部の小文字の高さを抑えました。
 + 括弧や記号類は、コーディングと全角文字とのバランスを重視して作成しました。
 
+![screenshot ASCII](https://github.com/tomonic-x/Illusion/raw/master/img/screenshot-ascii.png)
+
 
 #### Illusion N (Narrow)
 
 + Unicode 対応の国際的なコンソール環境と互換の文字幅。
 + JIS X 0208 の Ambiguous な記号類を半角幅でデザイン。
 + 丸付き数字 `⑩` ローマ数字 `Ⅳ` なども半角として実装。
+
+![Illusion N with Yu Gothic](https://github.com/tomonic-x/Illusion/raw/master/img/screenshot-n.png)
 
 
 #### Illusion W (Wide)
@@ -54,11 +60,15 @@ Unicode の East Asian Width の *曖昧 (Ambiguous)* と *中立 (Neutral)* に
 + メイリオでプロポーショナルな JIS X 0208 の記号類を全角幅で実装。
 + 罫線素片とブロック要素の Neutral は半角扱い。
 
+![Illusion W with Meiryo](https://github.com/tomonic-x/Illusion/raw/master/img/screenshot-w.png)
+
 
 #### Illusion Z (Zenkaku)
 
 + 多くの日本語等幅フォントと同様の文字幅。
 + 罫線素片とブロック要素の Neutral も全角扱い。
+
+![Illusion Z with BIZ UDGothic](https://github.com/tomonic-x/Illusion/raw/master/img/screenshot-z.png)
 
 
 日本語等幅フォントとの組み合わせに関して
@@ -131,6 +141,47 @@ TODO
 ライセンス
 -----------------------------------------------------------------------
 + Roboto Mono (Google) の Apache License 2.0 に準じます。
+
+
+グリフ詳細
+-----------------------------------------------------------------------
+
+### 凡例
+
+![Legend](https://github.com/tomonic-x/Illusion/raw/master/img/chart-legend.png)
+
+
+### ASCII
+
+![ASCII](https://github.com/tomonic-x/Illusion/raw/master/img/chart-ascii.png)
+
+
+### Unicode
+
+![Unicode](https://github.com/tomonic-x/Illusion/raw/master/img/chart-unicode.png)
+
+
+### JIS X 0208 Ambiguous Half-Width
+
+![JIS X 0208 Ambiguous Half-Width](https://github.com/tomonic-x/Illusion/raw/master/img/chart-jisx0208-hwid1.png)
+
+![JIS X 0208 Ambiguous Half-Width](https://github.com/tomonic-x/Illusion/raw/master/img/chart-jisx0208-hwid2.png)
+
+
+### JIS X 0208 Ambiguous Full-Width
+
+![JIS X 0208 Ambiguous Full-Width](https://github.com/tomonic-x/Illusion/raw/master/img/chart-jisx0208-fwid1.png)
+
+![JIS X 0208 Ambiguous Full-Width](https://github.com/tomonic-x/Illusion/raw/master/img/chart-jisx0208-fwid2.png)
+
+
+### Box Drawing, Block Elements Half-Width
+
+![Box Drawing, Block Elements Half-Width](https://github.com/tomonic-x/Illusion/raw/master/img/chart-box-hwid.png)
+
+### Box Drawing, Block Elements Full-Width
+
+![Box Drawing, Block Elements Full-Width](https://github.com/tomonic-x/Illusion/raw/master/img/chart-box-fwid.png)
 
 
 <!-- End Of File -->
