@@ -1,0 +1,1948 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="oceanic-next.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/highlight.min.js"></script>
+    <style type="text/css">
+body {
+  font-family: Yu Gothic;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+pre > code {
+  width: 720px;
+  padding: 0.5em;
+  border: 0.5em solid #65737e;
+}
+table, th, td {
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+}
+table th:first-child {
+  width: 80px;
+}
+th, td {
+  height: 40px;
+  max-height: 40px;
+  min-height: 40px;
+}
+th {
+  color: #666;
+  background: #eee;
+  padding: 0 0.5em;
+  text-align: center;
+}
+td:empty { background: #ddd; }
+th:empty { background: #eee; }
+td {
+  text-align: center;
+  font-size: 32px;
+  width: 32px;
+}
+.N td { font-family: Illusion N; }
+.W td { font-family: Illusion W; }
+.Z td { font-family: Illusion Z; }
+td.fw {
+  font-family: MS Mincho;
+  color: #bbb;
+  background: #eee;
+}
+.r {
+  position: relative;
+  background: rgba(102, 153, 204, 0.09375);
+}
+.r::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  border-bottom: 8px solid transparent;
+  border-left: 8px solid #69c;
+}
+td.xh, td.xf {
+  color: #ccc;
+  background: rgba(255, 255, 127, 0.125);
+}
+td.xh {
+  font-family: Consolas, Monaco, DejaVu Sans Mono, monospace;
+}
+td.xf {
+  font-family: Yu Mincho, YuMincho, MS Mincho, monospace;
+}
+    </style>
+  </head>
+  <body>
+    <h1>img</h1>
+    <h2>screenshot</h2>
+    <h3>screenshot.png</h3>
+    <pre><code style="font-family:Illusion N;line-height:1.25;" class="markdown">Illusion: Programming font for JIS X 0208 with Unicode.
+=============================================================================
+                                        ┍━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑
+                                        │     **括弧類とのバランス**     │
+      0123456789ABCDEF0123456789ABCDEF  ├────────────────────────────────┤
+0020.  !"#$%&amp;'()*+,-./0123456789:;&lt;=&gt;?  │ (a) (j) (f) (B) (なし) (税込)  │
+0040. @ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_  │ {e} {g} {h} {R} {あり} {定食}  │
+0060. `abcdefghijklmnopqrstuvwxyz{|}~   │ [u] [y] [l] [W] [取消] [確定]  │
+00A0.  ¡¢£¤¥¦§¨©ª«¬&nbsp;®¯°±²³´µ¶·¸¹º»¼½¾¿  │ &lt;p&gt;段落&lt;/p&gt;                    │
+2010. ‐ ‒–—―‖‗‘’‚‛“”„‟†‡•‣․‥…‧          ┝━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┥
+2030. ‰ ′″‴‵‶‷ ‹›※‼ ‾    ⁃⁄⁅⁆           │     **引用符とのバランス**     │
+2070.     ⁴                             ├────────────────────────────────┤
+E0A0.                            │ "a", "A", "あ", "天"           │
+                                        │ 'i', 'I', 'い', '地'           │
+                                        │ `u`, `U`, `う`, `人`           │
+    ▁▂▃▄▅▆▇██▇▆▅▄▃▂▁▁▂▃▄▅▆▇██▇▆▅▄▃▂▁    │ `#include &lt;stdio.h&gt;`           │
+                                        └────────────────────────────────┘
+U+2500-257F Box Drawing, U+2580-259F Block Elements for Half-Width version
+-----------------------------------------------------------------------------
+       0 1 2 3 4 5 6 7 8 9 A B C D E F
+2500.  ─ ━ │ ┃ ┄ ┅ ┆ ┇ ┈ ┉ ┊ ┋ ┌ ┍ ┎ ┏ `╷ ┌┰┬┐┏┯┳┓┌╥┬┐╔╤╦╗┏┱┮┑`
+2510.  ┐ ┑ ┒ ┓ └ ┕ ┖ ┗ ┘ ┙ ┚ ┛ ├ ┝ ┞ ┟ `╽ │┃││┃│┃┃│║││║│║║┃┃││`
+2520.  ┠ ┡ ┢ ┣ ┤ ┥ ┦ ┧ ┨ ┩ ┪ ┫ ┬ ┭ ┮ ┯ `┃ ├┸┼┤┣┷╋┫├╨┼┤╠╧╬╣┡┹╆┪`
+2530.  ┰ ┱ ┲ ┳ ┴ ┵ ┶ ┷ ┸ ┹ ┺ ┻ ┼ ┽ ┾ ┿ `╿ ┝━┿┥┠─╂┨╞═╪╡╟─╫╢┟─╄┩`
+2540.  ╀ ╁ ╂ ╃ ╄ ╅ ╆ ╇ ╈ ╉ ╊ ╋ ╌ ╍ ╎ ╏ `╵ └─┴┘┗━┻┛└─┴┘╚═╩╝┗━┵┘`
+2550.  ═ ║ ╒ ╓ ╔ ╕ ╖ ╗ ╘ ╙ ╚ ╛ ╜ ╝ ╞ ╟ `╷ ┌ Command ┒╻╺━┓`
+2560.  ╠ ╡ ╢ ╣ ╤ ╥ ╦ ╧ ╨ ╩ ╪ ╫ ╬ ╭ ╮ ╯ `╽ │　Fight  ┃╿  ┃`
+2570.  ╰ ╱ ╲ ╳ ╴ ╵ ╶ ╷ ╸ ╹ ╺ ╻ ╼ ╽ ╾ ╿ `┃ │　Tool   ┃│┌╼┛`
+2580.  ▀ ▁ ▂ ▃ ▄ ▅ ▆ ▇ █ ▉ ▊ ▋ ▌ ▍ ▎ ▏ `╿ │→ Escape ┃╽│  `
+2590.  ▐ ░ ▒ ▓ ▔ ▕ ▖ ▗ ▘ ▙ ▚ ▛ ▜ ▝ ▞ ▟ `╵ ┕━━━━━━━━━┛╹└─╴`
+<span style="font-family:Illusion Z,Meiryo">
+U+2500-257F Box Drawing, U+2580-259F Block Elements for Full-Width version
+-----------------------------------------------------------------------------
+       0 1 2 3 4 5 6 7 8 9 A B C D E F
+2500. ─━│┃┄┅┆┇┈┉┊┋┌┍┎┏ `┌┰┬┐┏┯┳┓┌╥┬┐╔╤╦╗┏┱┮┑`
+2510. ┐┑┒┓└┕┖┗┘┙┚┛├┝┞┟ `│┃││┃│┃┃│║││║│║║┃┃││`
+2520. ┠┡┢┣┤┥┦┧┨┩┪┫┬┭┮┯ `├┸┼┤┣┷╋┫├╨┼┤╠╧╬╣┡┹╆┪`
+2530. ┰┱┲┳┴┵┶┷┸┹┺┻┼┽┾┿ `┝━┿┥┠─╂┨╞═╪╡╟─╫╢┟─╄┩`
+2540. ╀╁╂╃╄╅╆╇╈╉╊╋╌╍╎╏ `└─┴┘┗━┻┛└─┴┘╚═╩╝┗━┵┘`
+2550. ═║╒╓╔╕╖╗╘╙╚╛╜╝╞╟ `┌コマンド─┒╷╻╺━┓`
+2560. ╠╡╢╣╤╥╦╧╨╩╪╫╬╭╮╯ `│　たたかう┃╽╿　　┃`
+2570. ╰╱╲╳╴╵╶╷╸╹╺╻╼╽╾╿ `│　どうぐ　┃┃│┌╼┛`
+2580. ▀▁▂▃▄▅▆▇█▉▊▋▌▍▎▏ `│→にげる　┃╿╽│　　`
+2590. ▐░▒▓▔▕▖▗▘▙▚▛▜▝▞▟ `┕━━━━━┛╵╹└─╴`</code></pre>
+    <h3>screenshot-ascii.png</h3>
+    <pre><code style="font-family:Illusion N;line-height:1.25;" class="cpp">#include &lt;iostream&gt;
+
+int main(int argc, char *argv[]) {
+
+  /* An annoying "Hello World" example */
+  for (auto i = 0; i &lt; 0xFFFF; i++)
+    cout &lt;&lt; "Hello, World!" &lt;&lt; endl;
+
+  char c = '\n';
+  unordered_map &lt;string, vector&lt;string&gt; &gt; m;
+  m["key"] = "\\\\"; // this is an error
+
+  return -2e3 + 12l;
+}</span></code></pre>
+    <h3>screenshot-n.png</h3>
+    <pre><code style="font-family:Illusion N,Yu Gothic;line-height:1.25" class="html">&lt;!DOCTYPE html&gt;
+&lt;html lang="ja"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Illusion N with Yu Gothic&lt;/title&gt;
+    &lt;link rel="stylesheet" type="text/css" href="style.css"&gt;
+    &lt;script type="text/javascript"&gt;(function() { console.log('hello'); })();&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;!-- 本文ここから --&gt;
+    &lt;h1&gt;「Illusion N」と「游ゴシック」の組み合わせ例&lt;/h1&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Ambiguous の記号類 (●,■,※,…) は半角幅 (Narrow) です。&lt;/li&gt;
+      &lt;li&gt;半角での表現が困難な文字 (⑩,Ⅳ,…) も半角幅です。&lt;/li&gt;
+      &lt;li&gt;半分欠けたり、隣と被って描画される現象は回避できます。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+    <h3>screenshot-w.png</h3>
+    <pre><code style="font-family:Illusion W,Meiryo;line-height:1.25;" class="markdown">曖昧文字 / Ambiguous / メイリオとの組み合わせ例
+=======================================================================
+Unicode の [付属書11](https://unicode.org/reports/tr11/)
+**East Asian Width** で *文脈によって文字幅が異なる* と分類されている文字。
+
+コンソール端末のアプリやコマンドは、かつての `EUC-JP` 時代と異なり、
+現在は Unicode (UTF-8) で *Narrow* を標準とする形で普及している。
+このため通常では、米印 `※` や三点リーダ `…` なども半角となる。
+
+端末側でフォントと文字の扱いを変更しても、ホスト側で動くプログラムの
+対応がなければ **Text User Interface** のレイアウトは崩れてしまう。</code></pre>
+    <h3>screenshot-z.png</h3>
+    <pre><code style="font-family:Illusion Z,BIZ UDGothic;line-height:1.25;" class="markdown">中立文字 / Neutral / BIZ UDゴシックとの組み合わせ例
+=======================================================================
+`☀` Neutral は、東アジアの文脈に __通常出現しない文字__ とされている。
+`☁` 例えば _アラビア文字_ など。全角でも半角でもない、という扱い。
+`☂` ところが JIS X 0213 の全角記号や絵文字が Neutral に分類され、
+`⌘` 事実上 __通常出現しない文字__ でなくなってしまっている……。
+
+`Illusion Z` では _罫線素片とブロック要素_ の Neutral
+`╌╍╎╏╴╵╶╷╸╹╺╻╼╽╾╿▐░▖▗▘▙▚▛▜▝▞▟` が全角になります。
+</code></pre>
+    <h2>chart</h2>
+    <h3>凡例</h3>
+    <div>
+      <div style="display:inline-block"><table><tr><td class="r">!</td></tr></table></div>
+      Roboto Mono 由来の文字（改変含む）
+    </div>
+    <div>
+      <div style="display:inline-block"><table class="N"><tr><td>※</td></tr></table></div>
+      作成した文字
+    </div>
+    <div>
+      <div style="display:inline-block"><table><tr><td class="xh">⁉</td></tr></table></div>
+      実装していない文字
+    </div>
+    <div>
+      <div style="display:inline-block"><table><tr><td class="fw">㈱</td></tr></table></div>
+      JIS X 0208 の Fullwidth/Wide の文字
+    </div>
+    <div>
+      <div style="display:inline-block"><table><tr><td></td></tr></table></div>
+      JIS X 0208 または Unicode での空番
+    </div>
+    <h3>ASCII</h3>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>0</th><th>1</th><th>2</th><th>3</th>
+          <th>4</th><th>5</th><th>6</th><th>7</th>
+          <th>8</th><th>9</th><th>A</th><th>B</th>
+          <th>C</th><th>D</th><th>E</th><th>F</th>
+        </tr>
+      </thead>
+      <tbody class="N">
+        <tr>
+          <th>U+0020</th>
+          <td>&nbsp;</td>
+          <td class="r">!</td>
+          <td class="r">"</td>
+          <td class="r">#</td>
+          <td class="r">$</td>
+          <td class="r">%</td>
+          <td class="r">&amp;</td>
+          <td class="r">'</td>
+          <td>(</td>
+          <td>)</td>
+          <td>*</td>
+          <td>+</td>
+          <td>,</td>
+          <td>-</td>
+          <td>.</td>
+          <td>/</td>
+        </tr>
+        <tr>
+          <th>U+0030</th>
+          <td class="r">0</td>
+          <td class="r">1</td>
+          <td class="r">2</td>
+          <td class="r">3</td>
+          <td class="r">4</td>
+          <td class="r">5</td>
+          <td class="r">6</td>
+          <td class="r">7</td>
+          <td class="r">8</td>
+          <td class="r">9</td>
+          <td>:</td>
+          <td>;</td>
+          <td>&lt;</td>
+          <td>=</td>
+          <td>&gt;</td>
+          <td class="r">?</td>
+        </tr>
+        <tr>
+          <th>U+0040</th>
+          <td class="r">@</td>
+          <td class="r">A</td>
+          <td class="r">B</td>
+          <td class="r">C</td>
+          <td class="r">D</td>
+          <td class="r">E</td>
+          <td class="r">F</td>
+          <td class="r">G</td>
+          <td class="r">H</td>
+          <td class="r">I</td>
+          <td class="r">J</td>
+          <td class="r">K</td>
+          <td class="r">L</td>
+          <td class="r">M</td>
+          <td class="r">N</td>
+          <td class="r">O</td>
+        </tr>
+        <tr>
+          <th>U+0050</th>
+          <td class="r">P</td>
+          <td class="r">Q</td>
+          <td class="r">R</td>
+          <td class="r">S</td>
+          <td class="r">T</td>
+          <td class="r">U</td>
+          <td class="r">V</td>
+          <td class="r">W</td>
+          <td class="r">X</td>
+          <td class="r">Y</td>
+          <td class="r">Z</td>
+          <td>[</td>
+          <td>\</td>
+          <td>]</td>
+          <td>^</td>
+          <td>_</td>
+        </tr>
+        <tr>
+          <th>U+0060</th>
+          <td class="r">`</td>
+          <td class="r">a</td>
+          <td class="r">b</td>
+          <td class="r">c</td>
+          <td class="r">d</td>
+          <td class="r">e</td>
+          <td class="r">f</td>
+          <td class="r">g</td>
+          <td class="r">h</td>
+          <td class="r">i</td>
+          <td class="r">j</td>
+          <td class="r">k</td>
+          <td class="r">l</td>
+          <td class="r">m</td>
+          <td class="r">n</td>
+          <td class="r">o</td>
+        </tr>
+        <tr>
+          <th>U+0070</th>
+          <td class="r">p</td>
+          <td class="r">q</td>
+          <td class="r">r</td>
+          <td class="r">s</td>
+          <td class="r">t</td>
+          <td class="r">u</td>
+          <td class="r">v</td>
+          <td class="r">w</td>
+          <td class="r">x</td>
+          <td class="r">y</td>
+          <td class="r">z</td>
+          <td>{</td>
+          <td>|</td>
+          <td>}</td>
+          <td>~</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>Unicode Narrow Glyphs</h2>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>0</th><th>1</th><th>2</th><th>3</th>
+          <th>4</th><th>5</th><th>6</th><th>7</th>
+          <th>8</th><th>9</th><th>A</th><th>B</th>
+          <th>C</th><th>D</th><th>E</th><th>F</th>
+        </tr>
+      </thead>
+      <tbody class="N">
+        <tr>
+          <th>U+00A0</th>
+          <td>&nbsp;</td>
+          <td class="r">¡</td>
+          <td class="r">¢</td>
+          <td class="r">£</td>
+          <td class="r">¤</td>
+          <td>¥</td>
+          <td>¦</td>
+          <td class="r">§</td>
+          <td>¨</td>
+          <td>©</td>
+          <td class="r">ª</td>
+          <td class="r">«</td>
+          <td>¬</td>
+          <td>­</td>
+          <td>®</td>
+          <td class="r">¯</td>
+        </tr>
+        <tr>
+          <th>U+00B0</th>
+          <td>°</td>
+          <td>±</td>
+          <td class="r">²</td>
+          <td class="r">³</td>
+          <td class="r">´</td>
+          <td class="r">µ</td>
+          <td>¶</td>
+          <td>·</td>
+          <td class="r">¸</td>
+          <td class="r">¹</td>
+          <td class="r">º</td>
+          <td class="r">»</td>
+          <td class="r">¼</td>
+          <td class="r">½</td>
+          <td class="r">¾</td>
+          <td class="r">¿</td>
+        </tr>
+        <tr>
+          <th>U+2000</th>
+          <td> </td>
+          <td> </td>
+          <td> </td>
+          <td> </td>
+          <td> </td>
+          <td> </td>
+          <td> </td>
+          <td> </td>
+          <td> </td>
+          <td> </td>
+          <td> </td>
+          <td class="xh">​</td>
+          <td class="xh">‌</td>
+          <td class="xh">‍</td>
+          <td class="xh">‎</td>
+          <td class="xh">‏</td>
+        </tr>
+        <tr>
+          <th>U+2010</th>
+          <td>‐</td>
+          <td class="xh"></td>
+          <td>‒</td>
+          <td>–</td>
+          <td>—</td>
+          <td>―</td>
+          <td>‖</td>
+          <td>‗</td>
+          <td>‘</td>
+          <td>’</td>
+          <td>‚</td>
+          <td>‛</td>
+          <td>“</td>
+          <td>”</td>
+          <td>„</td>
+          <td>‟</td>
+        </tr>
+        <tr>
+          <th>U+2020</th>
+          <td>†</td>
+          <td>‡</td>
+          <td>•</td>
+          <td>‣</td>
+          <td>․</td>
+          <td>‥</td>
+          <td>…</td>
+          <td>‧</td>
+          <td class="xh"> </td>
+          <td class="xh"> </td>
+          <td class="xh">‪</td>
+          <td class="xh">‫</td>
+          <td class="xh">‬</td>
+          <td class="xh">‭</td>
+          <td class="xh">‮</td>
+          <td class="xh"> </td>
+        </tr>
+        <tr>
+          <th>U+2030</th>
+          <td>‰</td>
+          <td class="xh">‱</td>
+          <td>′</td>
+          <td>″</td>
+          <td>‴</td>
+          <td>‵</td>
+          <td>‶</td>
+          <td>‷</td>
+          <td class="xh">‸</td>
+          <td class="r">‹</td>
+          <td class="r">›</td>
+          <td>※</td>
+          <td class="r">‼</td>
+          <td class="xh">‽</td>
+          <td>‾</td>
+          <td class="xh">‿</td>
+        </tr>
+        <tr>
+          <th>U+2040</th>
+          <td class="xh">⁀</td>
+          <td class="xh">⁁</td>
+          <td class="xh">⁂</td>
+          <td>⁃</td>
+          <td>⁄</td>
+          <td>⁅</td>
+          <td>⁆</td>
+          <td class="xh">⁇</td>
+          <td class="xh">⁈</td>
+          <td class="xh">⁉</td>
+          <td class="xh">⁊</td>
+          <td class="xh">⁋</td>
+          <td class="xh">⁌</td>
+          <td class="xh">⁍</td>
+          <td class="xh">⁎</td>
+          <td class="xh">⁏</td>
+        </tr>
+        <tr>
+          <th>U+2070</th>
+          <td class="xh">⁰</td>
+          <td class="xh">ⁱ</td>
+          <td></td>
+          <td></td>
+          <td class="r">⁴</td>
+          <td class="xh">⁵</td>
+          <td class="xh">⁶</td>
+          <td class="xh">⁷</td>
+          <td class="xh">⁸</td>
+          <td class="xh">⁹</td>
+          <td class="xh">⁺</td>
+          <td class="xh">⁻</td>
+          <td class="xh">⁼</td>
+          <td class="xh">⁽</td>
+          <td class="xh">⁾</td>
+          <td class="xh">ⁿ</td>
+        </tr>
+        <tr>
+          <th>U+2660</th>
+          <td>☰</td>
+          <td>☱</td>
+          <td>☲</td>
+          <td>☳</td>
+          <td>☴</td>
+          <td>☵</td>
+          <td>☶</td>
+          <td>☶</td>
+          <td class="xh">☸</td>
+          <td class="xh">☹</td>
+          <td class="xh">☺</td>
+          <td class="xh">☻</td>
+          <td class="xh">☼</td>
+          <td class="xh">☽</td>
+          <td class="xh">☾</td>
+          <td class="xh">☿</td>
+        </tr>
+        <tr>
+          <th>U+E0A0</th>
+          <td></td><td></td><td></td><td></td>
+          <td></td><td></td><td></td><td></td>
+          <td></td><td></td><td></td><td></td>
+          <td></td><td></td><td></td><td></td>
+        </tr>
+        <tr>
+          <th>U+E0B0</th>
+          <td></td><td></td><td></td><td></td>
+          <td></td><td></td><td></td><td></td>
+          <td></td><td></td><td></td><td></td>
+          <td></td><td></td><td></td><td></td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>JIS X 0208 Ambiguous Half-Width version</h2>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>0</th><th>1</th><th>2</th><th>3</th><th>4</th>
+          <th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
+          <th>10</th><th>11</th><th>12</th><th>13</th><th>14</th>
+          <th>15</th><th>16</th><th>17</th><th>18</th><th>19</th>
+        </tr>
+      </thead>
+      <tbody class="N">
+        <tr>
+          <th>00100</th>
+          <td></td>
+          <td class="fw">　</td>
+          <td class="fw">、</td>
+          <td class="fw">。</td>
+          <td class="fw">，</td>
+          <td class="fw">．</td>
+          <td class="fw">・</td>
+          <td class="fw">：</td>
+          <td class="fw">；</td>
+          <td class="fw">？</td>
+          <td class="fw">！</td>
+          <td class="fw">゛</td>
+          <td class="fw">゜</td>
+          <td>´</td>
+          <td class="fw">｀</td>
+          <td>¨</td>
+          <td class="fw">＾</td>
+          <td class="fw">￣</td>
+          <td class="fw">＿</td>
+          <td class="fw">ヽ</td>
+        </tr>
+        <tr>
+          <th>00120</th>
+          <td class="fw">ヾ</td>
+          <td class="fw">ゝ</td>
+          <td class="fw">ゞ</td>
+          <td class="fw">〃</td>
+          <td class="fw">仝</td>
+          <td class="fw">々</td>
+          <td class="fw">〆</td>
+          <td class="fw">〇</td>
+          <td class="fw">ー</td>
+          <td>―</td>
+          <td>‐</td>
+          <td class="fw">／</td>
+          <td class="fw">＼</td>
+          <td class="fw">～</td>
+          <td>∥</td>
+          <td class="fw">｜</td>
+          <td>…</td>
+          <td>‥</td>
+          <td>‘</td>
+          <td>’</td>
+        </tr>
+        <tr>
+          <th>00140</th>
+          <td>“</td>
+          <td>”</td>
+          <td class="fw">（</td>
+          <td class="fw">）</td>
+          <td class="fw">〔</td>
+          <td class="fw">〕</td>
+          <td class="fw">［</td>
+          <td class="fw">］</td>
+          <td class="fw">｛</td>
+          <td class="fw">｝</td>
+          <td class="fw">〈</td>
+          <td class="fw">〉</td>
+          <td class="fw">《</td>
+          <td class="fw">》</td>
+          <td class="fw">「</td>
+          <td class="fw">」</td>
+          <td class="fw">『</td>
+          <td class="fw">』</td>
+          <td class="fw">【</td>
+          <td class="fw">】</td>
+        </tr>
+        <tr>
+          <th>00160</th>
+          <td class="fw">＋</td>
+          <td class="fw">－</td>
+          <td>±</td>
+          <td>×</td>
+          <td>÷</td>
+          <td class="fw">＝</td>
+          <td>≠</td>
+          <td class="fw">＜</td>
+          <td class="fw">＞</td>
+          <td>≦</td>
+          <td>≧</td>
+          <td>∞</td>
+          <td>∴</td>
+          <td>♂</td>
+          <td>♀</td>
+          <td>°</td>
+          <td>′</td>
+          <td>″</td>
+          <td>℃</td>
+          <td class="fw">￥</td>
+        </tr>
+        <tr>
+          <th>00180</th>
+          <td class="fw">＄</td>
+          <td class="fw">￠</td>
+          <td class="fw">￡</td>
+          <td class="fw">％</td>
+          <td class="fw">＃</td>
+          <td class="fw">＆</td>
+          <td class="fw">＊</td>
+          <td class="fw">＠</td>
+          <td>§</td>
+          <td>☆</td>
+          <td>★</td>
+          <td>○</td>
+          <td>●</td>
+          <td>◎</td>
+          <td>◇</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>00200</th>
+          <td></td>
+          <td>◆</td>
+          <td>□</td>
+          <td>■</td>
+          <td>△</td>
+          <td>▲</td>
+          <td>▽</td>
+          <td>▼</td>
+          <td>※</td>
+          <td class="fw">〒</td>
+          <td>→</td>
+          <td>←</td>
+          <td>↑</td>
+          <td>↑</td>
+          <td>↓</td>
+          <td class="fw">〓</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>00220</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>∈</td>
+          <td>∋</td>
+          <td>⊆</td>
+          <td>⊇</td>
+          <td>⊂</td>
+          <td>⊃</td>
+          <td>∪</td>
+          <td>∩</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>00240</th>
+          <td></td>
+          <td></td>
+          <td>∧</td>
+          <td>∨</td>
+          <td class="fw">￢</td>
+          <td>⇒</td>
+          <td>⇔</td>
+          <td>∀</td>
+          <td>∃</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>00260</th>
+          <td>∠</td>
+          <td>⊥</td>
+          <td>⌒</td>
+          <td class="r">∂</td>
+          <td>∇</td>
+          <td>≡</td>
+          <td>≒</td>
+          <td>≪</td>
+          <td>≫</td>
+          <td>√</td>
+          <td>∽</td>
+          <td>∝</td>
+          <td>∵</td>
+          <td>∫</td>
+          <td>∬</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>00280</th>
+          <td></td>
+          <td></td>
+          <td class="r">Å</td>
+          <td>‰</td>
+          <td>♯</td>
+          <td>♭</td>
+          <td>♪</td>
+          <td>†</td>
+          <td>‡</td>
+          <td>¶</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>◯</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>0</th><th>1</th><th>2</th><th>3</th><th>4</th>
+          <th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
+          <th>10</th><th>11</th><th>12</th><th>13</th><th>14</th>
+          <th>15</th><th>16</th><th>17</th><th>18</th><th>19</th>
+        </tr>
+      </thead>
+      <tbody class="N">
+        <tr>
+          <th>00600</th>
+          <td></td>
+          <td class="r">Α</td>
+          <td class="r">Β</td>
+          <td class="r">Γ</td>
+          <td class="r">Δ</td>
+          <td class="r">Ε</td>
+          <td class="r">Ζ</td>
+          <td class="r">Η</td>
+          <td class="r">Θ</td>
+          <td class="r">Ι</td>
+          <td class="r">Κ</td>
+          <td class="r">Λ</td>
+          <td class="r">Μ</td>
+          <td class="r">Ν</td>
+          <td class="r">Ξ</td>
+          <td class="r">Ο</td>
+          <td class="r">Π</td>
+          <td class="r">Ρ</td>
+          <td class="r">Σ</td>
+          <td class="r">Τ</td>
+        </tr>
+        <tr>
+          <th>00620</th>
+          <td class="r">Υ</td>
+          <td class="r">Φ</td>
+          <td class="r">Χ</td>
+          <td class="r">Ψ</td>
+          <td class="r">Ω</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="r">α</td>
+          <td class="r">β</td>
+          <td class="r">γ</td>
+          <td class="r">δ</td>
+          <td class="r">ε</td>
+          <td class="r">ζ</td>
+          <td class="r">η</td>
+        </tr>
+        <tr>
+          <th>00640</th>
+          <td class="r">θ</td>
+          <td class="r">ι</td>
+          <td class="r">κ</td>
+          <td class="r">λ</td>
+          <td class="r">μ</td>
+          <td class="r">ν</td>
+          <td class="r">ξ</td>
+          <td class="r">ο</td>
+          <td class="r">π</td>
+          <td class="r">ρ</td>
+          <td class="r">σ</td>
+          <td class="r">τ</td>
+          <td class="r">υ</td>
+          <td class="r">φ</td>
+          <td class="r">χ</td>
+          <td class="r">ψ</td>
+          <td class="r">ω</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>00700</th>
+          <td></td>
+          <td class="r">А</td>
+          <td class="r">Б</td>
+          <td class="r">В</td>
+          <td class="r">Г</td>
+          <td class="r">Д</td>
+          <td class="r">Е</td>
+          <td class="r">Ё</td>
+          <td class="r">Ж</td>
+          <td class="r">З</td>
+          <td class="r">И</td>
+          <td class="r">Й</td>
+          <td class="r">К</td>
+          <td class="r">Л</td>
+          <td class="r">М</td>
+          <td class="r">Н</td>
+          <td class="r">О</td>
+          <td class="r">П</td>
+          <td class="r">Р</td>
+          <td class="r">С</td>
+        </tr>
+        <tr>
+          <th>00720</th>
+          <td class="r">Т</td>
+          <td class="r">У</td>
+          <td class="r">Ф</td>
+          <td class="r">Х</td>
+          <td class="r">Ц</td>
+          <td class="r">Ч</td>
+          <td class="r">Ш</td>
+          <td class="r">Щ</td>
+          <td class="r">Ъ</td>
+          <td class="r">Ы</td>
+          <td class="r">Ь</td>
+          <td class="r">Э</td>
+          <td class="r">Ю</td>
+          <td class="r">Я</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>00740</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="r">а</td>
+          <td class="r">б</td>
+          <td class="r">в</td>
+          <td class="r">г</td>
+          <td class="r">д</td>
+          <td class="r">е</td>
+          <td class="r">ё</td>
+          <td class="r">ж</td>
+          <td class="r">з</td>
+          <td class="r">и</td>
+          <td class="r">й</td>
+        </tr>
+        <tr>
+          <th>00760</th>
+          <td class="r">к</td>
+          <td class="r">л</td>
+          <td class="r">м</td>
+          <td class="r">н</td>
+          <td class="r">о</td>
+          <td class="r">п</td>
+          <td class="r">р</td>
+          <td class="r">с</td>
+          <td class="r">т</td>
+          <td class="r">у</td>
+          <td class="r">ф</td>
+          <td class="r">х</td>
+          <td class="r">ц</td>
+          <td class="r">ч</td>
+          <td class="r">ш</td>
+          <td class="r">щ</td>
+          <td class="r">ъ</td>
+          <td class="r">ы</td>
+          <td class="r">ь</td>
+          <td class="r">э</td>
+        </tr>
+        <tr>
+          <th>00780</th>
+          <td class="r">ю</td>
+          <td class="r">я</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>00800</th>
+          <td></td>
+          <td>─</td>
+          <td>│</td>
+          <td>┌</td>
+          <td>┐</td>
+          <td>┘</td>
+          <td>└</td>
+          <td>├</td>
+          <td>┬</td>
+          <td>┤</td>
+          <td>┴</td>
+          <td>┼</td>
+          <td>━</td>
+          <td>┃</td>
+          <td>┏</td>
+          <td>┓</td>
+          <td>┛</td>
+          <td>┗</td>
+          <td>┣</td>
+          <td>┳</td>
+        </tr>
+          <th>00820</th>
+          <td>┫</td>
+          <td>┻</td>
+          <td>╋</td>
+          <td>┠</td>
+          <td>┯</td>
+          <td>┨</td>
+          <td>┷</td>
+          <td>┿</td>
+          <td>┝</td>
+          <td>┰</td>
+          <td>┥</td>
+          <td>┸</td>
+          <td>╂</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>01300</th>
+          <td></td>
+          <td>①</td>
+          <td>②</td>
+          <td>③</td>
+          <td>④</td>
+          <td>⑤</td>
+          <td>⑥</td>
+          <td>⑦</td>
+          <td>⑧</td>
+          <td>⑨</td>
+          <td>⑩</td>
+          <td>⑪</td>
+          <td>⑫</td>
+          <td>⑬</td>
+          <td>⑭</td>
+          <td>⑮</td>
+          <td>⑯</td>
+          <td>⑰</td>
+          <td>⑱</td>
+          <td>⑲</td>
+        </tr>
+        <tr>
+          <th>01320</th>
+          <td>⑳</td>
+          <td>Ⅰ</td>
+          <td>Ⅱ</td>
+          <td>Ⅲ</td>
+          <td>Ⅳ</td>
+          <td>Ⅴ</td>
+          <td>Ⅵ</td>
+          <td>Ⅶ</td>
+          <td>Ⅷ</td>
+          <td>Ⅸ</td>
+          <td>Ⅹ</td>
+          <td></td>
+          <td class="fw">㍉</td>
+          <td class="fw">㌔</td>
+          <td class="fw">㌢</td>
+          <td class="fw">㍍</td>
+          <td class="fw">㌘</td>
+          <td class="fw">㌧</td>
+          <td class="fw">㌃</td>
+          <td class="fw">㌶</td>
+        </tr>
+        <tr>
+          <th>01340</th>
+          <td class="fw">㍑</td>
+          <td class="fw">㍗</td>
+          <td class="fw">㌍</td>
+          <td class="fw">㌦</td>
+          <td class="fw">㌣</td>
+          <td class="fw">㌫</td>
+          <td class="fw">㍊</td>
+          <td class="fw">㌻</td>
+          <td class="fw">㎜</td>
+          <td class="fw">㎝</td>
+          <td class="fw">㎞</td>
+          <td class="fw">㎎</td>
+          <td class="fw">㎏</td>
+          <td class="fw">㏄</td>
+          <td class="fw">㎡</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>01360</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="fw">㍻</td>
+          <td class="fw">〝</td>
+          <td class="fw">〟</td>
+          <td class="r">№</td>
+          <td class="fw">㏍</td>
+          <td>℡</td>
+          <td class="fw">㊤</td>
+          <td class="fw">㊥</td>
+          <td class="fw">㊦</td>
+          <td class="fw">㊧</td>
+          <td class="fw">㊨</td>
+          <td class="fw">㈱</td>
+          <td class="fw">㈲</td>
+          <td class="fw">㈹</td>
+          <td class="fw">㍾</td>
+          <td class="fw">㍽</td>
+          <td class="fw">㍼</td>
+        </tr>
+        <tr>
+          <th>01380</th>
+          <td>≒</td>
+          <td>≡</td>
+          <td>∫</td>
+          <td>∮</td>
+          <td>∑</td>
+          <td>√</td>
+          <td>⊥</td>
+          <td>∠</td>
+          <td>∟</td>
+          <td>⊿</td>
+          <td>∵</td>
+          <td>∩</td>
+          <td>∪</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>09280</th>
+          <td></td>
+          <td>ⅰ</td>
+          <td>ⅱ</td>
+          <td>ⅲ</td>
+          <td>ⅳ</td>
+          <td>ⅴ</td>
+          <td>ⅵ</td>
+          <td>ⅶ</td>
+          <td>ⅷ</td>
+          <td>ⅸ</td>
+          <td>ⅹ</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>JIS X 0208 Ambiguous Full-Width version</h2>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>0</th><th>1</th><th>2</th><th>3</th><th>4</th>
+          <th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
+          <th>10</th><th>11</th><th>12</th><th>13</th><th>14</th>
+          <th>15</th><th>16</th><th>17</th><th>18</th><th>19</th>
+        </tr>
+      </thead>
+      <tbody class="W">
+        <tr>
+          <th>00100</th>
+          <td></td>
+          <td class="fw">　</td>
+          <td class="fw">、</td>
+          <td class="fw">。</td>
+          <td class="fw">，</td>
+          <td class="fw">．</td>
+          <td class="fw">・</td>
+          <td class="fw">：</td>
+          <td class="fw">；</td>
+          <td class="fw">？</td>
+          <td class="fw">！</td>
+          <td class="fw">゛</td>
+          <td class="fw">゜</td>
+          <td>´</td>
+          <td class="fw">｀</td>
+          <td>¨</td>
+          <td class="fw">＾</td>
+          <td class="fw">￣</td>
+          <td class="fw">＿</td>
+          <td class="fw">ヽ</td>
+        </tr>
+        <tr>
+          <th>00120</th>
+          <td class="fw">ヾ</td>
+          <td class="fw">ゝ</td>
+          <td class="fw">ゞ</td>
+          <td class="fw">〃</td>
+          <td class="fw">仝</td>
+          <td class="fw">々</td>
+          <td class="fw">〆</td>
+          <td class="fw">〇</td>
+          <td class="fw">ー</td>
+          <td class="xf">―</td>
+          <td class="xf">‐</td>
+          <td class="fw">／</td>
+          <td class="fw">＼</td>
+          <td class="fw">～</td>
+          <td>∥</td>
+          <td class="fw">｜</td>
+          <td>…</td>
+          <td>‥</td>
+          <td class="xf">‘</td>
+          <td class="xf">’</td>
+        </tr>
+        <tr>
+          <th>00140</th>
+          <td>“</td>
+          <td>”</td>
+          <td class="fw">（</td>
+          <td class="fw">）</td>
+          <td class="fw">〔</td>
+          <td class="fw">〕</td>
+          <td class="fw">［</td>
+          <td class="fw">］</td>
+          <td class="fw">｛</td>
+          <td class="fw">｝</td>
+          <td class="fw">〈</td>
+          <td class="fw">〉</td>
+          <td class="fw">《</td>
+          <td class="fw">》</td>
+          <td class="fw">「</td>
+          <td class="fw">」</td>
+          <td class="fw">『</td>
+          <td class="fw">』</td>
+          <td class="fw">【</td>
+          <td class="fw">】</td>
+        </tr>
+        <tr>
+          <th>00160</th>
+          <td class="fw">＋</td>
+          <td class="fw">－</td>
+          <td>±</td>
+          <td>×</td>
+          <td>÷</td>
+          <td class="fw">＝</td>
+          <td>≠</td>
+          <td class="fw">＜</td>
+          <td class="fw">＞</td>
+          <td>≦</td>
+          <td>≧</td>
+          <td>∞</td>
+          <td>∴</td>
+          <td class="xf">♂</td>
+          <td class="xf">♀</td>
+          <td class="xf">°</td>
+          <td>′</td>
+          <td>″</td>
+          <td class="xf">℃</td>
+          <td class="fw">￥</td>
+        </tr>
+        <tr>
+          <th>00180</th>
+          <td class="fw">＄</td>
+          <td class="fw">￠</td>
+          <td class="fw">￡</td>
+          <td class="fw">％</td>
+          <td class="fw">＃</td>
+          <td class="fw">＆</td>
+          <td class="fw">＊</td>
+          <td class="fw">＠</td>
+          <td class="r">§</td>
+          <td class="xf">☆</td>
+          <td class="xf">★</td>
+          <td class="xf">○</td>
+          <td class="xf">●</td>
+          <td class="xf">◎</td>
+          <td class="xf">◇</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>00200</th>
+          <td></td>
+          <td class="xf">◆</td>
+          <td class="xf">□</td>
+          <td class="xf">■</td>
+          <td class="xf">△</td>
+          <td class="xf">▲</td>
+          <td class="xf">▽</td>
+          <td class="xf">▼</td>
+          <td class="xf">※</td>
+          <td class="fw">〒</td>
+          <td class="xf">→</td>
+          <td class="xf">←</td>
+          <td class="xf">↑</td>
+          <td class="xf">↑</td>
+          <td class="xf">↓</td>
+          <td class="fw">〓</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>00220</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>∈</td>
+          <td>∋</td>
+          <td>⊆</td>
+          <td>⊇</td>
+          <td>⊂</td>
+          <td>⊃</td>
+          <td>∪</td>
+          <td>∩</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>00240</th>
+          <td></td>
+          <td></td>
+          <td>∧</td>
+          <td>∨</td>
+          <td class="fw">￢</td>
+          <td class="xf">⇒</td>
+          <td class="xf">⇔</td>
+          <td class="xf">∀</td>
+          <td class="xf">∃</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>00260</th>
+          <td>∠</td>
+          <td>⊥</td>
+          <td class="xf">⌒</td>
+          <td class="r">∂</td>
+          <td class="xf">∇</td>
+          <td>≡</td>
+          <td>≒</td>
+          <td>≪</td>
+          <td>≫</td>
+          <td>√</td>
+          <td>∽</td>
+          <td>∝</td>
+          <td>∵</td>
+          <td>∫</td>
+          <td>∬</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>00280</th>
+          <td></td>
+          <td></td>
+          <td class="xf">Å</td>
+          <td class="xf">‰</td>
+          <td class="xf">♯</td>
+          <td class="xf">♭</td>
+          <td class="xf">♪</td>
+          <td class="xf">†</td>
+          <td class="xf">‡</td>
+          <td>¶</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="xf">◯</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+    </table>
+    <br>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>0</th><th>1</th><th>2</th><th>3</th><th>4</th>
+          <th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
+          <th>10</th><th>11</th><th>12</th><th>13</th><th>14</th>
+          <th>15</th><th>16</th><th>17</th><th>18</th><th>19</th>
+        </tr>
+      </thead>
+      <tbody class="Z">
+        <tr>
+          <th>00600</th>
+          <td></td>
+          <td class="r">Α</td>
+          <td class="r">Β</td>
+          <td class="r">Γ</td>
+          <td class="r">Δ</td>
+          <td class="r">Ε</td>
+          <td class="r">Ζ</td>
+          <td class="r">Η</td>
+          <td class="r">Θ</td>
+          <td class="r">Ι</td>
+          <td class="r">Κ</td>
+          <td class="r">Λ</td>
+          <td class="r">Μ</td>
+          <td class="r">Ν</td>
+          <td class="r">Ξ</td>
+          <td class="r">Ο</td>
+          <td class="r">Π</td>
+          <td class="r">Ρ</td>
+          <td class="r">Σ</td>
+          <td class="r">Τ</td>
+        </tr>
+        <tr>
+          <th>00620</th>
+          <td class="r">Υ</td>
+          <td class="r">Φ</td>
+          <td class="r">Χ</td>
+          <td class="r">Ψ</td>
+          <td class="r">Ω</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="r">α</td>
+          <td class="r">β</td>
+          <td class="r">γ</td>
+          <td class="r">δ</td>
+          <td class="r">ε</td>
+          <td class="r">ζ</td>
+          <td class="r">η</td>
+        </tr>
+        <tr>
+          <th>00640</th>
+          <td class="r">θ</td>
+          <td class="r">ι</td>
+          <td class="r">κ</td>
+          <td class="r">λ</td>
+          <td class="r">μ</td>
+          <td class="r">ν</td>
+          <td class="r">ξ</td>
+          <td class="r">ο</td>
+          <td class="r">π</td>
+          <td class="r">ρ</td>
+          <td class="r">σ</td>
+          <td class="r">τ</td>
+          <td class="r">υ</td>
+          <td class="r">φ</td>
+          <td class="r">χ</td>
+          <td class="r">ψ</td>
+          <td class="r">ω</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>00700</th>
+          <td></td>
+          <td class="r">А</td>
+          <td class="r">Б</td>
+          <td class="r">В</td>
+          <td class="r">Г</td>
+          <td class="r">Д</td>
+          <td class="r">Е</td>
+          <td class="r">Ё</td>
+          <td class="r">Ж</td>
+          <td class="r">З</td>
+          <td class="r">И</td>
+          <td class="r">Й</td>
+          <td class="r">К</td>
+          <td class="r">Л</td>
+          <td class="r">М</td>
+          <td class="r">Н</td>
+          <td class="r">О</td>
+          <td class="r">П</td>
+          <td class="r">Р</td>
+          <td class="r">С</td>
+        </tr>
+        <tr>
+          <th>00720</th>
+          <td class="r">Т</td>
+          <td class="r">У</td>
+          <td class="r">Ф</td>
+          <td class="r">Х</td>
+          <td class="r">Ц</td>
+          <td class="r">Ч</td>
+          <td class="r">Ш</td>
+          <td class="r">Щ</td>
+          <td class="r">Ъ</td>
+          <td class="r">Ы</td>
+          <td class="r">Ь</td>
+          <td class="r">Э</td>
+          <td class="r">Ю</td>
+          <td class="r">Я</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>00740</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="r">а</td>
+          <td class="r">б</td>
+          <td class="r">в</td>
+          <td class="r">г</td>
+          <td class="r">д</td>
+          <td class="r">е</td>
+          <td class="r">ё</td>
+          <td class="r">ж</td>
+          <td class="r">з</td>
+          <td class="r">и</td>
+          <td class="r">й</td>
+        </tr>
+        <tr>
+          <th>00760</th>
+          <td class="r">к</td>
+          <td class="r">л</td>
+          <td class="r">м</td>
+          <td class="r">н</td>
+          <td class="r">о</td>
+          <td class="r">п</td>
+          <td class="r">р</td>
+          <td class="r">с</td>
+          <td class="r">т</td>
+          <td class="r">у</td>
+          <td class="r">ф</td>
+          <td class="r">х</td>
+          <td class="r">ц</td>
+          <td class="r">ч</td>
+          <td class="r">ш</td>
+          <td class="r">щ</td>
+          <td class="r">ъ</td>
+          <td class="r">ы</td>
+          <td class="r">ь</td>
+          <td class="r">э</td>
+        </tr>
+        <tr>
+          <th>00780</th>
+          <td class="r">ю</td>
+          <td class="r">я</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>00800</th>
+          <td></td>
+          <td>─</td>
+          <td>│</td>
+          <td>┌</td>
+          <td>┐</td>
+          <td>┘</td>
+          <td>└</td>
+          <td>├</td>
+          <td>┬</td>
+          <td>┤</td>
+          <td>┴</td>
+          <td>┼</td>
+          <td>━</td>
+          <td>┃</td>
+          <td>┏</td>
+          <td>┓</td>
+          <td>┛</td>
+          <td>┗</td>
+          <td>┣</td>
+          <td>┳</td>
+        </tr>
+          <th>00820</th>
+          <td>┫</td>
+          <td>┻</td>
+          <td>╋</td>
+          <td>┠</td>
+          <td>┯</td>
+          <td>┨</td>
+          <td>┷</td>
+          <td>┿</td>
+          <td>┝</td>
+          <td>┰</td>
+          <td>┥</td>
+          <td>┸</td>
+          <td>╂</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>01300</th>
+          <td></td>
+          <td class="xf">①</td>
+          <td class="xf">②</td>
+          <td class="xf">③</td>
+          <td class="xf">④</td>
+          <td class="xf">⑤</td>
+          <td class="xf">⑥</td>
+          <td class="xf">⑦</td>
+          <td class="xf">⑧</td>
+          <td class="xf">⑨</td>
+          <td class="xf">⑩</td>
+          <td class="xf">⑪</td>
+          <td class="xf">⑫</td>
+          <td class="xf">⑬</td>
+          <td class="xf">⑭</td>
+          <td class="xf">⑮</td>
+          <td class="xf">⑯</td>
+          <td class="xf">⑰</td>
+          <td class="xf">⑱</td>
+          <td class="xf">⑲</td>
+        </tr>
+        <tr>
+          <th>01320</th>
+          <td class="xf">⑳</td>
+          <td class="xf">Ⅰ</td>
+          <td class="xf">Ⅱ</td>
+          <td class="xf">Ⅲ</td>
+          <td class="xf">Ⅳ</td>
+          <td class="xf">Ⅴ</td>
+          <td class="xf">Ⅵ</td>
+          <td class="xf">Ⅶ</td>
+          <td class="xf">Ⅷ</td>
+          <td class="xf">Ⅸ</td>
+          <td class="xf">Ⅹ</td>
+          <td></td>
+          <td class="fw">㍉</td>
+          <td class="fw">㌔</td>
+          <td class="fw">㌢</td>
+          <td class="fw">㍍</td>
+          <td class="fw">㌘</td>
+          <td class="fw">㌧</td>
+          <td class="fw">㌃</td>
+          <td class="fw">㌶</td>
+        </tr>
+        <tr>
+          <th>01340</th>
+          <td class="fw">㍑</td>
+          <td class="fw">㍗</td>
+          <td class="fw">㌍</td>
+          <td class="fw">㌦</td>
+          <td class="fw">㌣</td>
+          <td class="fw">㌫</td>
+          <td class="fw">㍊</td>
+          <td class="fw">㌻</td>
+          <td class="fw">㎜</td>
+          <td class="fw">㎝</td>
+          <td class="fw">㎞</td>
+          <td class="fw">㎎</td>
+          <td class="fw">㎏</td>
+          <td class="fw">㏄</td>
+          <td class="fw">㎡</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>01360</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="fw">㍻</td>
+          <td class="fw">〝</td>
+          <td class="fw">〟</td>
+          <td class="xf">№</td>
+          <td class="fw">㏍</td>
+          <td class="xf">℡</td>
+          <td class="fw">㊤</td>
+          <td class="fw">㊥</td>
+          <td class="fw">㊦</td>
+          <td class="fw">㊧</td>
+          <td class="fw">㊨</td>
+          <td class="fw">㈱</td>
+          <td class="fw">㈲</td>
+          <td class="fw">㈹</td>
+          <td class="fw">㍾</td>
+          <td class="fw">㍽</td>
+          <td class="fw">㍼</td>
+        </tr>
+        <tr>
+          <th>01380</th>
+          <td>≒</td>
+          <td>≡</td>
+          <td>∫</td>
+          <td>∮</td>
+          <td>∑</td>
+          <td>√</td>
+          <td>⊥</td>
+          <td>∠</td>
+          <td>∟</td>
+          <td>⊿</td>
+          <td>∵</td>
+          <td>∩</td>
+          <td>∪</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>09280</th>
+          <td></td>
+          <td class="xf">ⅰ</td>
+          <td class="xf">ⅱ</td>
+          <td class="xf">ⅲ</td>
+          <td class="xf">ⅳ</td>
+          <td class="xf">ⅴ</td>
+          <td class="xf">ⅵ</td>
+          <td class="xf">ⅶ</td>
+          <td class="xf">ⅷ</td>
+          <td class="xf">ⅸ</td>
+          <td class="xf">ⅹ</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>Box Drawing, Block Elements Half-Width version</h2>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>0</th><th>1</th><th>2</th><th>3</th>
+          <th>4</th><th>5</th><th>6</th><th>7</th>
+          <th>8</th><th>9</th><th>A</th><th>B</th>
+          <th>C</th><th>D</th><th>E</th><th>F</th>
+        </tr>
+      </thead>
+      <tbody class="N">
+        <tr>
+          <th>U+2500</th>
+          <td>─</td><td>━</td><td>│</td><td>┃</td>
+          <td>┄</td><td>┅</td><td>┆</td><td>┇</td>
+          <td>┈</td><td>┉</td><td>┊</td><td>┋</td>
+          <td>┌</td><td>┍</td><td>┎</td><td>┏</td>
+        </tr>
+        <tr>
+          <th>U+2510</th>
+          <td>┐</td><td>┑</td><td>┒</td><td>┓</td>
+          <td>└</td><td>┕</td><td>┖</td><td>┗</td>
+          <td>┘</td><td>┙</td><td>┚</td><td>┛</td>
+          <td>├</td><td>┝</td><td>┞</td><td>┟</td>
+        </tr>
+        <tr>
+          <th>U+2520</th>
+          <td>┠</td><td>┡</td><td>┢</td><td>┣</td>
+          <td>┤</td><td>┥</td><td>┦</td><td>┧</td>
+          <td>┨</td><td>┩</td><td>┪</td><td>┫</td>
+          <td>┬</td><td>┭</td><td>┮</td><td>┯</td>
+        </tr>
+        <tr>
+          <th>U+2530</th>
+          <td>┰</td><td>┱</td><td>┲</td><td>┳</td>
+          <td>┴</td><td>┵</td><td>┶</td><td>┷</td>
+          <td>┸</td><td>┹</td><td>┺</td><td>┻</td>
+          <td>┼</td><td>┽</td><td>┾</td><td>┿</td>
+        </tr>
+        <tr>
+          <th>U+2540</th>
+          <td>╀</td><td>╁</td><td>╂</td><td>╃</td>
+          <td>╄</td><td>╅</td><td>╆</td><td>╇</td>
+          <td>╈</td><td>╉</td><td>╊</td><td>╋</td>
+          <td>╌</td><td>╍</td><td>╎</td><td>╏</td>
+        </tr>
+        <tr>
+          <th>U+2550</th>
+          <td>═</td><td>║</td><td>╒</td><td>╓</td>
+          <td>╔</td><td>╕</td><td>╖</td><td>╗</td>
+          <td>╘</td><td>╙</td><td>╚</td><td>╛</td>
+          <td>╜</td><td>╝</td><td>╞</td><td>╟</td>
+        </tr>
+        <tr>
+          <th>U+2560</th>
+          <td>╠</td><td>╡</td><td>╢</td><td>╣</td>
+          <td>╤</td><td>╥</td><td>╦</td><td>╧</td>
+          <td>╨</td><td>╩</td><td>╪</td><td>╫</td>
+          <td>╬</td><td>╭</td><td>╮</td><td>╯</td>
+        </tr>
+        <tr>
+          <th>U+2570</th>
+          <td>╰</td><td>╱</td><td>╲</td><td>╳</td>
+          <td>╴</td><td>╵</td><td>╶</td><td>╷</td>
+          <td>╸</td><td>╹</td><td>╺</td><td>╻</td>
+          <td>╼</td><td>╽</td><td>╾</td><td>╿</td>
+        </tr>
+        <tr>
+          <th>U+2580</th>
+          <td>▀</td><td>▁</td><td>▂</td><td>▃</td>
+          <td>▄</td><td>▅</td><td>▆</td><td>▇</td>
+          <td>█</td><td>▉</td><td>▊</td><td>▋</td>
+          <td>▌</td><td>▍</td><td>▎</td><td>▏</td>
+        </tr>
+        <tr>
+          <th>U+2590</th>
+          <td>▐</td><td>░</td><td>▒</td><td>▓</td>
+          <td>▔</td><td>▕</td><td>▖</td><td>▗</td>
+          <td>▘</td><td>▙</td><td>▚</td><td>▛</td>
+          <td>▜</td><td>▝</td><td>▞</td><td>▟</td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>Box Drawing, Block Elements Full-Width version</h2>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>0</th><th>1</th><th>2</th><th>3</th>
+          <th>4</th><th>5</th><th>6</th><th>7</th>
+          <th>8</th><th>9</th><th>A</th><th>B</th>
+          <th>C</th><th>D</th><th>E</th><th>F</th>
+        </tr>
+      </thead><thead>
+      </thead><tbody class="Z">
+        <tr>
+          <th>U+2500</th>
+          <td>─</td><td>━</td><td>│</td><td>┃</td>
+          <td>┄</td><td>┅</td><td>┆</td><td>┇</td>
+          <td>┈</td><td>┉</td><td>┊</td><td>┋</td>
+          <td>┌</td><td>┍</td><td>┎</td><td>┏</td>
+        </tr>
+        <tr>
+          <th>U+2510</th>
+          <td>┐</td><td>┑</td><td>┒</td><td>┓</td>
+          <td>└</td><td>┕</td><td>┖</td><td>┗</td>
+          <td>┘</td><td>┙</td><td>┚</td><td>┛</td>
+          <td>├</td><td>┝</td><td>┞</td><td>┟</td>
+        </tr>
+        <tr>
+          <th>U+2520</th>
+          <td>┠</td><td>┡</td><td>┢</td><td>┣</td>
+          <td>┤</td><td>┥</td><td>┦</td><td>┧</td>
+          <td>┨</td><td>┩</td><td>┪</td><td>┫</td>
+          <td>┬</td><td>┭</td><td>┮</td><td>┯</td>
+        </tr>
+        <tr>
+          <th>U+2530</th>
+          <td>┰</td><td>┱</td><td>┲</td><td>┳</td>
+          <td>┴</td><td>┵</td><td>┶</td><td>┷</td>
+          <td>┸</td><td>┹</td><td>┺</td><td>┻</td>
+          <td>┼</td><td>┽</td><td>┾</td><td>┿</td>
+        </tr>
+        <tr>
+          <th>U+2540</th>
+          <td>╀</td><td>╁</td><td>╂</td><td>╃</td>
+          <td>╄</td><td>╅</td><td>╆</td><td>╇</td>
+          <td>╈</td><td>╉</td><td>╊</td><td>╋</td>
+          <td>╌</td><td>╍</td><td>╎</td><td>╏</td>
+        </tr>
+        <tr>
+          <th>U+2550</th>
+          <td>═</td><td>║</td><td>╒</td><td>╓</td>
+          <td>╔</td><td>╕</td><td>╖</td><td>╗</td>
+          <td>╘</td><td>╙</td><td>╚</td><td>╛</td>
+          <td>╜</td><td>╝</td><td>╞</td><td>╟</td>
+        </tr>
+        <tr>
+          <th>U+2560</th>
+          <td>╠</td><td>╡</td><td>╢</td><td>╣</td>
+          <td>╤</td><td>╥</td><td>╦</td><td>╧</td>
+          <td>╨</td><td>╩</td><td>╪</td><td>╫</td>
+          <td>╬</td><td>╭</td><td>╮</td><td>╯</td>
+        </tr>
+        <tr>
+          <th>U+2570</th>
+          <td>╰</td><td>╱</td><td>╲</td><td>╳</td>
+          <td>╴</td><td>╵</td><td>╶</td><td>╷</td>
+          <td>╸</td><td>╹</td><td>╺</td><td>╻</td>
+          <td>╼</td><td>╽</td><td>╾</td><td>╿</td>
+        </tr>
+        <tr>
+          <th>U+2580</th>
+          <td>▀</td><td>▁</td><td>▂</td><td>▃</td>
+          <td>▄</td><td>▅</td><td>▆</td><td>▇</td>
+          <td>█</td><td>▉</td><td>▊</td><td>▋</td>
+          <td>▌</td><td>▍</td><td>▎</td><td>▏</td>
+        </tr>
+        <tr>
+          <th>U+2590</th>
+          <td>▐</td><td>░</td><td>▒</td><td>▓</td>
+          <td>▔</td><td>▕</td><td>▖</td><td>▗</td>
+          <td>▘</td><td>▙</td><td>▚</td><td>▛</td>
+          <td>▜</td><td>▝</td><td>▞</td><td>▟</td>
+        </tr>
+      </tbody>
+    </table>
+    <script defer="">hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
