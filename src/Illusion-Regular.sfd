@@ -4,7 +4,7 @@ FullName: Illusion
 FamilyName: Illusion
 Weight: Regular
 Copyright: Copyright 2015 Google Inc. All Rights Reserved.
-Version: 0.1
+Version: 0.1.1
 ItalicAngle: 0
 UnderlinePosition: -205
 UnderlineWidth: 102
@@ -21,7 +21,7 @@ OS2Version: 4
 OS2_WeightWidthSlopeOnly: 0
 OS2_UseTypoMetrics: 0
 CreationTime: 1547278235
-ModificationTime: 1559371244
+ModificationTime: 1559440262
 PfmFamily: 49
 TTFWeight: 400
 TTFWidth: 5

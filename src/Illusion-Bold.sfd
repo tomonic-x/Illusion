@@ -4,7 +4,7 @@ FullName: Illusion Bold
 FamilyName: Illusion
 Weight: Bold
 Copyright: Copyright 2015 Google Inc. All Rights Reserved.
-Version: 0.1
+Version: 0.1.1
 ItalicAngle: 0
 UnderlinePosition: -205
 UnderlineWidth: 102
@@ -21,7 +21,7 @@ OS2Version: 4
 OS2_WeightWidthSlopeOnly: 0
 OS2_UseTypoMetrics: 0
 CreationTime: 1547278235
-ModificationTime: 1559371241
+ModificationTime: 1559440270
 PfmFamily: 49
 TTFWeight: 700
 TTFWidth: 5
@@ -88,7 +88,7 @@ NameList: AGL For New Fonts
 DisplaySize: -48
 AntiAlias: 1
 FitToEm: 0
-WinInfo: 0 16 7
+WinInfo: 32 16 7
 BeginPrivate: 0
 EndPrivate
 BeginChars: 1112 1112
