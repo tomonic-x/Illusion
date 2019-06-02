@@ -56,9 +56,9 @@ Unicode の East Asian Width の *曖昧 (Ambiguous)* と *中立 (Neutral)* に
 #### Illusion W (Wide)
 
 + 従来の Shift_JIS や EUC-JP と互換の文字幅。
-+ 実装を省くことで、組み合わせ先の日本語等幅フォントを積極的に利用します。
-+ メイリオでプロポーショナルな JIS X 0208 の記号類を全角幅で実装。
++ JIS X 0208 の Ambiguous な記号類を全角幅で実装。
 + 罫線素片とブロック要素の Neutral は半角扱い。
++ vim の `ambiwidth=double` 用に Powerline Symbols も全角幅。
 
 ![Illusion W with Meiryo](https://github.com/tomonic-x/Illusion/raw/master/img/screenshot-w.png)
 
@@ -160,6 +160,11 @@ TODO
 
 ![Unicode](https://github.com/tomonic-x/Illusion/raw/master/img/chart-unicode.png)
 
+### Powerline Symbols
+
+![Powerline Symbols Half-Width](https://github.com/tomonic-x/Illusion/raw/master/img/chart-powerline-hwid.png)
+
+![Powerline Symbols Full-Width](https://github.com/tomonic-x/Illusion/raw/master/img/chart-powerline-fwid.png)
 
 ### JIS X 0208 Ambiguous Half-Width
 

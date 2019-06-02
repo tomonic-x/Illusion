@@ -51,7 +51,7 @@ def do_build(opt):
         if norm and full:
             fwid[norm] = full
             hwid[full] = norm
-        if eaw in ('H', 'Na') or 0xE000 <= code < 0xF900:
+        if eaw in ('H', 'Na'):
             row[:] = norm, ital, norm, ital, norm, ital
         elif eaw in ('F', 'W'):
             row[:] = full, full, full, full, full, full
