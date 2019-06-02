@@ -64,6 +64,8 @@ def do_build(opt):
     font['OS/2'].xAvgCharWidth = 1024
     font['OS/2'].panose.bProportion = 9
     font['OS/2'].ulCodePageRange1 |= 0x00020000
+    font['OS/2'].ulCodePageRange1 ^= 0x00000004
+    font['OS/2'].ulCodePageRange2 ^= 0x00020000
     font['OS/2'].ulUnicodeRange3 ^= 0x04C00000
     font['post'].isFixedPitch = 1
     del font['FFTM']
