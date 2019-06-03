@@ -4,11 +4,12 @@ import datetime, glob, math, os, unicodedata
 from tqdm import tqdm
 from fontTools.ttLib import TTFont
 from subprocess import run, DEVNULL
+import argparse
 
 SRC = 'src'
 DIST = 'dist'
 FAMILY = 'Illusion'
-PBAR = tqdm(total=70,leave=False,bar_format="{desc} {percentage:3.0f}%|{bar}|{n_fmt}/{total_fmt}")
+PBAR = None
 
 def PBAR_desc(task, path=""):
     if path and len(path):
@@ -198,6 +199,12 @@ def o(family_name, style):
 
 
 def main():
+    global PBAR
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--release', action='store_true', help='Build webfont')
+    args = parser.parse_args()
+    total = 70 if args.release else 34
+    PBAR = tqdm(total=total, leave=False, bar_format="{desc} {percentage:3.0f}%|{bar}|{n_fmt}/{total_fmt}")
     run(['mkdir', '-p', f'{DIST}/nohint'], stdout=DEVNULL)
     run(['mkdir', '-p', f'{DIST}/hinted'], stdout=DEVNULL)
     run(['mkdir', '-p', f'{DIST}/webfont'], stdout=DEVNULL)
@@ -251,11 +258,12 @@ def main():
         'dst':  f'{DIST}/hinted/{FAMILY}-Bold.ttc',
     })
     do_build(options)
-    do_webfont(
-        f'{DIST}/nohint/{FAMILY}-Regular.ttc',
-        f'{DIST}/nohint/{FAMILY}-Bold.ttc',
-    )
-    PBAR.update(1)
+    if args.release:
+        do_webfont(
+            f'{DIST}/nohint/{FAMILY}-Regular.ttc',
+            f'{DIST}/nohint/{FAMILY}-Bold.ttc',
+        )
+        PBAR.update(1)
     for x in glob.glob(f'{DIST}/*.ttf'):
         os.remove(x)
     PBAR.close()
