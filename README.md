@@ -3,6 +3,24 @@ Illusion
 コンソール端末での日本語混じりのコーディングを支援する補助フォントです。
 
 
+最近の更新内容
+-----------------------------------------------------------------------
+
+詳細は [CHANGELOG.md](https://github.com/tomonic-x/Illusion/blob/master/CHANGELOG.md) をご覧ください。
+
+* 2019-06-03 **v0.2.1**
+
+    Add: Generate .woff2, .woff, .ttf for Web Font
+
+* 2019-06-02 **v0.2**
+
+    Update: Implements all JIS X 0208 Ambiguous glyphs
+
+* 2019-06-02 **v0.1.1**
+
+    Fix: OS/2 UnicodeRange
+
+
 特徴
 -----------------------------------------------------------------------
 
@@ -122,7 +140,11 @@ TODO
 + FontForge
 + ttfautohint
 + Python 3.x
-+ afdko (fontTools, ttf2ttc)
++ Pythoh Packages (via pip install)
+    + afdko (fontTools, otf2otc)
+    + brotli
+    + zopfli
+    + tqdm
 
 
 ### 手順

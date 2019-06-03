@@ -1,16 +1,22 @@
 #!/usr/bin/env python
 
 import datetime, glob, math, os, unicodedata
+from tqdm import tqdm
 from fontTools.ttLib import TTFont
 from subprocess import run, DEVNULL
 
 SRC = 'src'
 DIST = 'dist'
 FAMILY = 'Illusion'
+PBAR = tqdm(total=70,leave=False,bar_format="{desc} {percentage:3.0f}%|{bar}|{n_fmt}/{total_fmt}")
 
+def PBAR_desc(task, path=""):
+    if path and len(path):
+        PBAR.set_description(f'{task:8s}: {os.path.basename(path):27s}')
 
 # copy nohint, make hinted
 def do_preprocess(src, nohint, hinted, ctrl):
+    PBAR_desc('hinting', hinted)
     run(['cp', f'{SRC}/{src}', f'{DIST}/{nohint}'], stdout=DEVNULL)
     run(['ttfautohint',
          '--hinting-range-min=6',
@@ -27,9 +33,11 @@ def do_preprocess(src, nohint, hinted, ctrl):
         f'{DIST}/{nohint}',
         f'{DIST}/{hinted}',
     ], stdout=DEVNULL)
+    PBAR.update(1)
 
 
 def do_build(opt):
+    PBAR_desc('prepare', opt['dst'])
     font = TTFont(opt['src'])
     glyph_map = {}
     fwid = font['GSUB'].table.LookupList.Lookup[0].SubTable[0].mapping
@@ -70,7 +78,9 @@ def do_build(opt):
     font['post'].isFixedPitch = 1
     del font['FFTM']
     del font['GPOS']
+    PBAR.update(1)
     for i in range(6):
+        PBAR_desc('generate', f'{i}.ttf')
         i_map = maps[i]
         i_opt = opt['font'][i]
         full_table = font['cmap'].getcmap(3, 10)
@@ -93,8 +103,78 @@ def do_build(opt):
             if record.nameID in i_opt:
                 record.string = i_opt[record.nameID]
         font.save(opt['ttf'][i])
+        PBAR.update(1)
+    PBAR_desc('otf2otc', opt['dst'])
     command = ['otf2otc', '-o', opt['dst']] + opt['ttf']
     run(command, stdout=DEVNULL)
+    PBAR.update(1)
+
+
+def out_webfont(src, files):
+    for num, head in files.items():
+        PBAR_desc('convert', f'{head}.tff')
+        run(['pyftsubset',
+            f'{DIST}/nohint/{src}',
+            f'--font-number={num}',
+            '--with-zopfli',
+            f'--output-file={DIST}/{head}.tff',
+            '--unicodes=*',
+            '--layout-features=*',
+            '--notdef-glyph',
+            '--notdef-outline',
+            '--recommended-glyphs',
+            '--no-hinting'
+            ], stdout=DEVNULL)
+        PBAR.update(1)
+        PBAR_desc('convert', f'{head}.woff')
+        run(['pyftsubset',
+            f'{DIST}/nohint/{src}',
+            f'--font-number={num}',
+            '--flavor=woff',
+            '--with-zopfli',
+            f'--output-file={DIST}/{head}.woff',
+            '--unicodes=*',
+            '--layout-features=*',
+            '--notdef-glyph',
+            '--notdef-outline',
+            '--recommended-glyphs',
+            '--no-hinting'
+            ], stdout=DEVNULL)
+        PBAR.update(1)
+        PBAR_desc('convert', f'{head}.woff2')
+        run(['pyftsubset',
+            f'{DIST}/nohint/{src}',
+            f'--font-number={num}',
+            '--flavor=woff2',
+            '--with-zopfli',
+            f'--output-file={DIST}/{head}.woff2',
+            '--unicodes=*',
+            '--layout-features=*',
+            '--notdef-glyph',
+            '--notdef-outline',
+            '--recommended-glyphs',
+            '--no-hinting'
+            ], stdout=DEVNULL)
+        PBAR.update(1)
+
+
+def do_webfont(*ttc):
+    out_webfont(f'{FAMILY}-Regular.ttc', {
+        0: f'webfont/{FAMILY}-N-Regular',
+        1: f'webfont/{FAMILY}-N-Italic',
+        2: f'webfont/{FAMILY}-W-Regular',
+        3: f'webfont/{FAMILY}-W-Italic',
+        4: f'webfont/{FAMILY}-Z-Regular',
+        5: f'webfont/{FAMILY}-Z-Italic',
+    })
+    out_webfont(f'{FAMILY}-Bold.ttc', {
+        0: f'webfont/{FAMILY}-N-Bold',
+        1: f'webfont/{FAMILY}-N-BoldItalic',
+        2: f'webfont/{FAMILY}-W-Bold',
+        3: f'webfont/{FAMILY}-W-BoldItalic',
+        4: f'webfont/{FAMILY}-Z-Bold',
+        5: f'webfont/{FAMILY}-Z-BoldItalic',
+    })
 
 
 def o(family_name, style):
@@ -120,6 +200,7 @@ def o(family_name, style):
 def main():
     run(['mkdir', '-p', f'{DIST}/nohint'], stdout=DEVNULL)
     run(['mkdir', '-p', f'{DIST}/hinted'], stdout=DEVNULL)
+    run(['mkdir', '-p', f'{DIST}/webfont'], stdout=DEVNULL)
     do_preprocess(
         f'{FAMILY}-Regular.ttf',
         f'{FAMILY}-Regular-nohint.ttf',
@@ -170,8 +251,14 @@ def main():
         'dst':  f'{DIST}/hinted/{FAMILY}-Bold.ttc',
     })
     do_build(options)
+    do_webfont(
+        f'{DIST}/nohint/{FAMILY}-Regular.ttc',
+        f'{DIST}/nohint/{FAMILY}-Bold.ttc',
+    )
+    PBAR.update(1)
     for x in glob.glob(f'{DIST}/*.ttf'):
         os.remove(x)
+    PBAR.close()
 
 
 if __name__ == '__main__':
