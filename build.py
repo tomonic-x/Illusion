@@ -112,12 +112,12 @@ def do_build(opt):
 
 def out_webfont(src, files):
     for num, head in files.items():
-        PBAR_desc('convert', f'{head}.tff')
+        PBAR_desc('convert', f'{head}.ttf')
         run(['pyftsubset',
             f'{DIST}/nohint/{src}',
             f'--font-number={num}',
             '--with-zopfli',
-            f'--output-file={DIST}/{head}.tff',
+            f'--output-file={DIST}/{head}.ttf',
             '--unicodes=*',
             '--layout-features=*',
             '--notdef-glyph',
@@ -128,7 +128,7 @@ def out_webfont(src, files):
         PBAR.update(1)
         PBAR_desc('convert', f'{head}.woff')
         run(['pyftsubset',
-            f'{DIST}/nohint/{src}',
+            f'{DIST}/{head}.ttf',
             f'--font-number={num}',
             '--flavor=woff',
             '--with-zopfli',
@@ -143,7 +143,7 @@ def out_webfont(src, files):
         PBAR.update(1)
         PBAR_desc('convert', f'{head}.woff2')
         run(['pyftsubset',
-            f'{DIST}/nohint/{src}',
+            f'{DIST}/{head}.ttf',
             f'--font-number={num}',
             '--flavor=woff2',
             '--with-zopfli',
