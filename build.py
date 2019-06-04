@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import datetime, glob, math, os, unicodedata
+import datetime, glob, math, os, unicodedata, sys
 from tqdm import tqdm
 from fontTools.ttLib import TTFont
 from subprocess import run, DEVNULL
@@ -11,12 +11,29 @@ DIST = 'dist'
 FAMILY = 'Illusion'
 PBAR = None
 
+class ValidateException(Exception):
+    pass
+
 def PBAR_desc(task, path=""):
     if path and len(path):
         PBAR.set_description(f'{task:8s}: {os.path.basename(path):27s}')
 
 # copy nohint, make hinted
 def do_preprocess(src, nohint, hinted, ctrl):
+    has_error = False
+    PBAR_desc('validate', src)
+    font = TTFont(f'{SRC}/{src}')
+    for code, name in font.getBestCmap().items():
+        pos = 0 if code < 0xF0000 else 1 if code < 0x100000 else 2
+        if code < 0x100000 and (font['hmtx'][name][0] not in (0, 1024)):
+            print(f'U+{code:04X}: not hwid ({font["hmtx"][name][0]}) at {src}')
+            has_error = True
+        elif 0x100000 <= code and (font['hmtx'][name][0] not in (0, 2048)):
+            print(f'U+{code:04X}: not fwid ({font["hmtx"][name][0]}) at {src}')
+            has_error = True
+    if has_error:
+        raise ValidateException('Invalid advance width')
+    PBAR.update(1)
     PBAR_desc('hinting', hinted)
     run(['cp', f'{SRC}/{src}', f'{DIST}/{nohint}'], stdout=DEVNULL)
     run(['ttfautohint',
@@ -45,6 +62,10 @@ def do_build(opt):
     hwid = font['GSUB'].table.LookupList.Lookup[1].SubTable[0].mapping
     for code, name in font.getBestCmap().items():
         pos = 0 if code < 0xF0000 else 1 if code < 0x100000 else 2
+        if code < 0x100000 and (font['hmtx'][name][0] not in (0, 1024)):
+            print(f'U+{code:04X}: not hwid ({font["hmtx"][name][0]}) at {opt["src"]}')
+        elif 0x100000 <= code and (font['hmtx'][name][0] not in (0, 2048)):
+            print(f'U+{code:04X}: not fwid ({font["hmtx"][name][0]}) at {opt["src"]}')
         code &= 0xFFFF
         if code not in glyph_map:
             glyph_map[code] = [ None, None, None, None, None, None ]
@@ -203,70 +224,74 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--release', action='store_true', help='Build webfont')
     args = parser.parse_args()
-    total = 70 if args.release else 34
+    total = 72 if args.release else 36
     PBAR = tqdm(total=total, leave=False, bar_format="{desc} {percentage:3.0f}%|{bar}|{n_fmt}/{total_fmt}")
-    run(['mkdir', '-p', f'{DIST}/nohint'], stdout=DEVNULL)
-    run(['mkdir', '-p', f'{DIST}/hinted'], stdout=DEVNULL)
-    run(['mkdir', '-p', f'{DIST}/webfont'], stdout=DEVNULL)
-    do_preprocess(
-        f'{FAMILY}-Regular.ttf',
-        f'{FAMILY}-Regular-nohint.ttf',
-        f'{FAMILY}-Regular-hinted.ttf',
-        f'{FAMILY}-Regular-ctrl.txt',
-    )
-    do_preprocess(
-        f'{FAMILY}-Bold.ttf',
-        f'{FAMILY}-Bold-nohint.ttf',
-        f'{FAMILY}-Bold-hinted.ttf',
-        f'{FAMILY}-Bold-ctrl.txt',
-    )
-    options = {
-        'src':  f'{DIST}/{FAMILY}-Regular-nohint.ttf',
-        'dst':  f'{DIST}/nohint/{FAMILY}-Regular.ttc',
-        'ttf':  [f'{DIST}/i-{x}.ttf' for x in range(6)],
-        'font': (
-            o(f'{FAMILY} N', 0),
-            o(f'{FAMILY} N', 1),
-            o(f'{FAMILY} W', 0),
-            o(f'{FAMILY} W', 1),
-            o(f'{FAMILY} Z', 0),
-            o(f'{FAMILY} Z', 1),
-        ),
-    }
-    do_build(options)
-    options.update({
-        'src':  f'{DIST}/{FAMILY}-Regular-hinted.ttf',
-        'dst':  f'{DIST}/hinted/{FAMILY}-Regular.ttc',
-    })
-    do_build(options)
-    options = {
-        'src':  f'{DIST}/{FAMILY}-Bold-nohint.ttf',
-        'dst':  f'{DIST}/nohint/{FAMILY}-Bold.ttc',
-        'ttf':  [f'{DIST}/i-{x}.ttf' for x in range(6)],
-        'font': (
-            o(f'{FAMILY} N', 2),
-            o(f'{FAMILY} N', 3),
-            o(f'{FAMILY} W', 2),
-            o(f'{FAMILY} W', 3),
-            o(f'{FAMILY} Z', 2),
-            o(f'{FAMILY} Z', 3),
-        ),
-    }
-    do_build(options)
-    options.update({
-        'src':  f'{DIST}/{FAMILY}-Bold-hinted.ttf',
-        'dst':  f'{DIST}/hinted/{FAMILY}-Bold.ttc',
-    })
-    do_build(options)
-    if args.release:
-        do_webfont(
-            f'{DIST}/nohint/{FAMILY}-Regular.ttc',
-            f'{DIST}/nohint/{FAMILY}-Bold.ttc',
+    try:
+        run(['mkdir', '-p', f'{DIST}/nohint'], stdout=DEVNULL)
+        run(['mkdir', '-p', f'{DIST}/hinted'], stdout=DEVNULL)
+        run(['mkdir', '-p', f'{DIST}/webfont'], stdout=DEVNULL)
+        do_preprocess(
+            f'{FAMILY}-Regular.ttf',
+            f'{FAMILY}-Regular-nohint.ttf',
+            f'{FAMILY}-Regular-hinted.ttf',
+            f'{FAMILY}-Regular-ctrl.txt',
         )
-        PBAR.update(1)
-    for x in glob.glob(f'{DIST}/*.ttf'):
-        os.remove(x)
-    PBAR.close()
+        do_preprocess(
+            f'{FAMILY}-Bold.ttf',
+            f'{FAMILY}-Bold-nohint.ttf',
+            f'{FAMILY}-Bold-hinted.ttf',
+            f'{FAMILY}-Bold-ctrl.txt',
+        )
+        options = {
+            'src':  f'{DIST}/{FAMILY}-Regular-nohint.ttf',
+            'dst':  f'{DIST}/nohint/{FAMILY}-Regular.ttc',
+            'ttf':  [f'{DIST}/i-{x}.ttf' for x in range(6)],
+            'font': (
+                o(f'{FAMILY} N', 0),
+                o(f'{FAMILY} N', 1),
+                o(f'{FAMILY} W', 0),
+                o(f'{FAMILY} W', 1),
+                o(f'{FAMILY} Z', 0),
+                o(f'{FAMILY} Z', 1),
+            ),
+        }
+        do_build(options)
+        options.update({
+            'src':  f'{DIST}/{FAMILY}-Regular-hinted.ttf',
+            'dst':  f'{DIST}/hinted/{FAMILY}-Regular.ttc',
+        })
+        do_build(options)
+        options = {
+            'src':  f'{DIST}/{FAMILY}-Bold-nohint.ttf',
+            'dst':  f'{DIST}/nohint/{FAMILY}-Bold.ttc',
+            'ttf':  [f'{DIST}/i-{x}.ttf' for x in range(6)],
+            'font': (
+                o(f'{FAMILY} N', 2),
+                o(f'{FAMILY} N', 3),
+                o(f'{FAMILY} W', 2),
+                o(f'{FAMILY} W', 3),
+                o(f'{FAMILY} Z', 2),
+                o(f'{FAMILY} Z', 3),
+            ),
+        }
+        do_build(options)
+        options.update({
+            'src':  f'{DIST}/{FAMILY}-Bold-hinted.ttf',
+            'dst':  f'{DIST}/hinted/{FAMILY}-Bold.ttc',
+        })
+        do_build(options)
+        if args.release:
+            do_webfont(
+                f'{DIST}/nohint/{FAMILY}-Regular.ttc',
+                f'{DIST}/nohint/{FAMILY}-Bold.ttc',
+            )
+            PBAR.update(1)
+        for x in glob.glob(f'{DIST}/*.ttf'):
+            os.remove(x)
+    except ValidateException:
+        print(sys.exc_info()[1])
+    finally:
+        PBAR.close()
 
 
 if __name__ == '__main__':
