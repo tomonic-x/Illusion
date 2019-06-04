@@ -20,7 +20,7 @@ table, th, td {
   border: 1px solid #ccc;
   border-collapse: collapse;
 }
-table th:first-child {
+th:first-child {
   width: 80px;
 }
 th, td {
@@ -41,10 +41,10 @@ td {
   font-size: 32px;
   width: 32px;
 }
-.N td { font-family: Illusion N; }
-.W td { font-family: Illusion W; }
-.Z td { font-family: Illusion Z; }
-td.fw {
+.IllusionN td { font-family: Illusion N; }
+.IllusionW td { font-family: Illusion W; }
+.IllusionZ td { font-family: Illusion Z; }
+td.fw, td.F, td.W {
   font-family: MS Mincho;
   color: #bbb;
   background: #eee;
@@ -61,15 +61,10 @@ td.fw {
   border-bottom: 8px solid transparent;
   border-left: 8px solid #69c;
 }
-td.xh, td.xf {
+td.x {
   color: #ccc;
   background: rgba(255, 255, 127, 0.125);
-}
-td.xh {
   font-family: Consolas, Monaco, DejaVu Sans Mono, monospace;
-}
-td.xf {
-  font-family: Yu Mincho, YuMincho, MS Mincho, monospace;
 }
     </style>
   </head>
@@ -185,11 +180,11 @@ Unicode の [付属書11](https://unicode.org/reports/tr11/)
       Roboto Mono 由来の文字（改変含む）
     </div>
     <div>
-      <div style="display:inline-block"><table class="N"><tr><td>※</td></tr></table></div>
+      <div style="display:inline-block"><table class="IllusionN"><tr><td>※</td></tr></table></div>
       作成した文字
     </div>
     <div>
-      <div style="display:inline-block"><table><tr><td class="xh">⁉</td></tr></table></div>
+      <div style="display:inline-block"><table><tr><td class="x">⁉</td></tr></table></div>
       実装していない文字
     </div>
     <div>
@@ -211,7 +206,7 @@ Unicode の [付属書11](https://unicode.org/reports/tr11/)
           <th>C</th><th>D</th><th>E</th><th>F</th>
         </tr>
       </thead>
-      <tbody class="N">
+      <tbody class="IllusionN">
         <tr>
           <th>U+0020</th>
           <td>&nbsp;</td>
@@ -328,7 +323,7 @@ Unicode の [付属書11](https://unicode.org/reports/tr11/)
         </tr>
       </tbody>
     </table>
-    <h2>Unicode Narrow Glyphs</h2>
+    <h2>Unicode</h2>
     <table>
       <thead>
         <tr>
@@ -339,7 +334,7 @@ Unicode の [付属書11](https://unicode.org/reports/tr11/)
           <th>C</th><th>D</th><th>E</th><th>F</th>
         </tr>
       </thead>
-      <tbody class="N">
+      <tbody class="IllusionN">
         <tr>
           <th>U+00A0</th>
           <td>&nbsp;</td>
@@ -391,16 +386,16 @@ Unicode の [付属書11](https://unicode.org/reports/tr11/)
           <td> </td>
           <td> </td>
           <td> </td>
-          <td class="xh">​</td>
-          <td class="xh">‌</td>
-          <td class="xh">‍</td>
-          <td class="xh">‎</td>
-          <td class="xh">‏</td>
+          <td class="x">​</td>
+          <td class="x">‌</td>
+          <td class="x">‍</td>
+          <td class="x">‎</td>
+          <td class="x">‏</td>
         </tr>
         <tr>
           <th>U+2010</th>
           <td>‐</td>
-          <td class="xh"></td>
+          <td class="x"></td>
           <td>‒</td>
           <td>–</td>
           <td>—</td>
@@ -426,74 +421,74 @@ Unicode の [付属書11](https://unicode.org/reports/tr11/)
           <td>‥</td>
           <td>…</td>
           <td>‧</td>
-          <td class="xh"> </td>
-          <td class="xh"> </td>
-          <td class="xh">‪</td>
-          <td class="xh">‫</td>
-          <td class="xh">‬</td>
-          <td class="xh">‭</td>
-          <td class="xh">‮</td>
-          <td class="xh"> </td>
+          <td class="x"> </td>
+          <td class="x"> </td>
+          <td class="x">‪</td>
+          <td class="x">‫</td>
+          <td class="x">‬</td>
+          <td class="x">‭</td>
+          <td class="x">‮</td>
+          <td class="x"> </td>
         </tr>
         <tr>
           <th>U+2030</th>
           <td>‰</td>
-          <td class="xh">‱</td>
+          <td>‱</td>
           <td>′</td>
           <td>″</td>
           <td>‴</td>
           <td>‵</td>
           <td>‶</td>
           <td>‷</td>
-          <td class="xh">‸</td>
+          <td>‸</td>
           <td class="r">‹</td>
           <td class="r">›</td>
           <td>※</td>
           <td class="r">‼</td>
-          <td class="xh">‽</td>
+          <td class="r">‽</td>
           <td>‾</td>
-          <td class="xh">‿</td>
+          <td>‿</td>
         </tr>
         <tr>
           <th>U+2040</th>
-          <td class="xh">⁀</td>
-          <td class="xh">⁁</td>
-          <td class="xh">⁂</td>
+          <td>⁀</td>
+          <td class="x">⁁</td>
+          <td class="x">⁂</td>
           <td>⁃</td>
           <td>⁄</td>
           <td>⁅</td>
           <td>⁆</td>
-          <td class="xh">⁇</td>
-          <td class="xh">⁈</td>
-          <td class="xh">⁉</td>
-          <td class="xh">⁊</td>
-          <td class="xh">⁋</td>
-          <td class="xh">⁌</td>
-          <td class="xh">⁍</td>
-          <td class="xh">⁎</td>
-          <td class="xh">⁏</td>
+          <td class="x">⁇</td>
+          <td class="x">⁈</td>
+          <td class="x">⁉</td>
+          <td class="x">⁊</td>
+          <td class="x">⁋</td>
+          <td class="x">⁌</td>
+          <td class="x">⁍</td>
+          <td class="x">⁎</td>
+          <td class="x">⁏</td>
         </tr>
         <tr>
           <th>U+2070</th>
-          <td class="xh">⁰</td>
-          <td class="xh">ⁱ</td>
+          <td class="x">⁰</td>
+          <td class="x">ⁱ</td>
           <td></td>
           <td></td>
           <td class="r">⁴</td>
-          <td class="xh">⁵</td>
-          <td class="xh">⁶</td>
-          <td class="xh">⁷</td>
-          <td class="xh">⁸</td>
-          <td class="xh">⁹</td>
-          <td class="xh">⁺</td>
-          <td class="xh">⁻</td>
-          <td class="xh">⁼</td>
-          <td class="xh">⁽</td>
-          <td class="xh">⁾</td>
-          <td class="xh">ⁿ</td>
+          <td class="x">⁵</td>
+          <td class="x">⁶</td>
+          <td class="x">⁷</td>
+          <td class="x">⁸</td>
+          <td class="x">⁹</td>
+          <td class="x">⁺</td>
+          <td class="x">⁻</td>
+          <td class="x">⁼</td>
+          <td class="x">⁽</td>
+          <td class="x">⁾</td>
+          <td class="x">ⁿ</td>
         </tr>
         <tr>
-          <th>U+2660</th>
+          <th>U+2630</th>
           <td>☰</td>
           <td>☱</td>
           <td>☲</td>
@@ -502,14 +497,14 @@ Unicode の [付属書11](https://unicode.org/reports/tr11/)
           <td>☵</td>
           <td>☶</td>
           <td>☶</td>
-          <td class="xh">☸</td>
-          <td class="xh">☹</td>
-          <td class="xh">☺</td>
-          <td class="xh">☻</td>
-          <td class="xh">☼</td>
-          <td class="xh">☽</td>
-          <td class="xh">☾</td>
-          <td class="xh">☿</td>
+          <td class="x">☸</td>
+          <td class="x">☹</td>
+          <td class="x">☺</td>
+          <td class="x">☻</td>
+          <td class="x">☼</td>
+          <td class="x">☽</td>
+          <td class="x">☾</td>
+          <td class="x">☿</td>
         </tr>
       </tbody>
     </table>
@@ -524,7 +519,7 @@ Unicode の [付属書11](https://unicode.org/reports/tr11/)
           <th>C</th><th>D</th><th>E</th><th>F</th>
         </tr>
       </thead>
-      <tbody class="N">
+      <tbody class="IllusionN">
         <tr>
           <th>U+E0A0</th>
           <td></td><td></td><td></td><td></td>
@@ -552,7 +547,7 @@ Unicode の [付属書11](https://unicode.org/reports/tr11/)
           <th>C</th><th>D</th><th>E</th><th>F</th>
         </tr>
       </thead>
-      <tbody class="W">
+      <tbody class="IllusionW">
         <tr>
           <th>U+E0A0</th>
           <td></td><td></td><td></td><td></td>
@@ -580,7 +575,7 @@ Unicode の [付属書11](https://unicode.org/reports/tr11/)
           <th>15</th><th>16</th><th>17</th><th>18</th><th>19</th>
         </tr>
       </thead>
-      <tbody class="N">
+      <tbody class="IllusionN">
         <tr>
           <th>00100</th>
           <td></td>
@@ -824,7 +819,7 @@ Unicode の [付属書11](https://unicode.org/reports/tr11/)
           <th>15</th><th>16</th><th>17</th><th>18</th><th>19</th>
         </tr>
       </thead>
-      <tbody class="N">
+      <tbody class="IllusionN">
         <tr>
           <th>00600</th>
           <td></td>
@@ -1205,7 +1200,7 @@ Unicode の [付属書11](https://unicode.org/reports/tr11/)
           <th>15</th><th>16</th><th>17</th><th>18</th><th>19</th>
         </tr>
       </thead>
-      <tbody class="W">
+      <tbody class="IllusionW">
         <tr>
           <th>00100</th>
           <td></td>
@@ -1448,7 +1443,7 @@ Unicode の [付属書11](https://unicode.org/reports/tr11/)
           <th>15</th><th>16</th><th>17</th><th>18</th><th>19</th>
         </tr>
       </thead>
-      <tbody class="Z">
+      <tbody class="IllusionZ">
         <tr>
           <th>00600</th>
           <td></td>
@@ -1829,7 +1824,7 @@ Unicode の [付属書11](https://unicode.org/reports/tr11/)
           <th>C</th><th>D</th><th>E</th><th>F</th>
         </tr>
       </thead>
-      <tbody class="N">
+      <tbody class="IllusionN">
         <tr>
           <th>U+2500</th>
           <td>─</td><td>━</td><td>│</td><td>┃</td>
@@ -1913,7 +1908,7 @@ Unicode の [付属書11](https://unicode.org/reports/tr11/)
           <th>C</th><th>D</th><th>E</th><th>F</th>
         </tr>
       </thead><thead>
-      </thead><tbody class="Z">
+      </thead><tbody class="IllusionZ">
         <tr>
           <th>U+2500</th>
           <td>─</td><td>━</td><td>│</td><td>┃</td>

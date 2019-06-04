@@ -6,7 +6,13 @@ Illusion
 最近の更新内容
 -----------------------------------------------------------------------
 
+
 詳細は [CHANGELOG.md](https://github.com/tomonic-x/Illusion/blob/master/CHANGELOG.md) をご覧ください。
+
+* 2019-06-04 **v0.2.2**
+
+    Update: Add full-width glyphs for unicode
+    Fix: typo '*.tff' -> '*.ttf'
 
 * 2019-06-03 **v0.2.1**
 
