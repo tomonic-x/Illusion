@@ -9,10 +9,14 @@ Illusion
 
 詳細は [CHANGELOG.md](https://github.com/tomonic-x/Illusion/blob/master/CHANGELOG.md) をご覧ください。
 
+* 2019-06-05 **v0.2.3**
+
+    + Fix: Several code point and advance width mistakes
+
 * 2019-06-04 **v0.2.2**
 
     + Update: Add full-width glyphs for unicode
-    + Fix: typo '*.tff' -> '*.ttf'
+    + Fix: typo `*.tff` -> `*.ttf`
 
 * 2019-06-03 **v0.2.1**
 
@@ -21,10 +25,6 @@ Illusion
 * 2019-06-02 **v0.2**
 
     + Update: Implements all JIS X 0208 Ambiguous glyphs
-
-* 2019-06-02 **v0.1.1**
-
-    + Fix: OS/2 UnicodeRange
 
 
 特徴
