@@ -9,6 +9,11 @@ Illusion
 
 詳細は [CHANGELOG.md](https://github.com/tomonic-x/Illusion/blob/master/CHANGELOG.md) をご覧ください。
 
+* 2019-06-06 **v0.2.4**
+
+    + Fix: Decompose U+00BC-BE, U+0410, U+0450, U+2460-2473
+    + Update: Build webfont from hinted
+
 * 2019-06-05 **v0.2.3**
 
     + Fix: Several code point and advance width mistakes
@@ -110,14 +115,10 @@ Unicode の East Asian Width の *曖昧 (Ambiguous)* と *中立 (Neutral)* に
 
 メニューバーから [編集]-[新規]-[複数行文字列値] で
 
-| キーの名前      | データ                     |
-|:----------------|:---------------------------|
-| Illusion N      | mplus-1m-regular.ttf,M+ 1m |
-| Illusion N Bold | mplus-1m-bold.ttf,M+ 1m    |
-| Illusion W      | mplus-1m-regular.ttf,M+ 1m |
-| Illusion W Bold | mplus-1m-bold.ttf,M+ 1m    |
-| Illusion Z      | mplus-1m-regular.ttf,M+ 1m |
-| Illusion Z Bold | mplus-1m-bold.ttf,M+ 1m    |
+| キーの名前      | データ                       |
+|:----------------|:-----------------------------|
+| Illusion N      | mplus-1m-regular.ttf,M+ 1m   |
+| Illusion N Bold | mplus-1m-bold.ttf,M+ 1m bold |
 
 といった要領で組み合わせられます。
 
@@ -133,9 +134,13 @@ TODO
 
 既知の問題
 -----------------------------------------------------------------------
-+ 等幅フォントを前提としないアプリで、
-  文字サイズが 2px の整数倍（1.5pt の整数倍）でない時に
-  ズレる場合があります。
+
+### ズレに関して
+
++ 等幅フォントを前提としないアプリで、ズレる場合があります。
+
+  - 文字サイズが 2px の整数倍（1.5pt の整数倍）でない時の罫線など。
+  - 太字／太字斜体の表示時の FontLink 側のフォントの幅など。
 
 
 ビルド方法
