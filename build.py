@@ -19,49 +19,43 @@ def PBAR_desc(task, path=""):
         PBAR.set_description(f'{task:8s}: {os.path.basename(path):27s}')
 
 def do_validate(regular, bold):
-    has_error = False
+    errmsg = []
     font_r = TTFont(f'{SRC}/{regular}')
     font_b = TTFont(f'{SRC}/{bold}')
     cmap_r = font_r.getBestCmap()
     cmap_b = font_b.getBestCmap()
+    mask_h = ~1024
+    mask_f = ~2048
     for font, cmap, src in ((font_r, cmap_r, regular), (font_b, cmap_b, bold)):
         PBAR_desc('validate', src)
         for code, name in cmap.items():
-            if code < 0x100000 and (font['hmtx'][name][0] not in (0, 1024)):
-                print(f'U+{code:04X}: not hwid ({font["hmtx"][name][0]}) at {src}')
-                has_error = True
-            elif 0x100000 <= code and (font['hmtx'][name][0] not in (0, 2048)):
-                print(f'U+{code:04X}: not fwid ({font["hmtx"][name][0]}) at {src}')
-                has_error = True
-        if has_error:
-            raise ValidateException('Invalid advance width')
+            if code < 0x100000 and font['hmtx'][name][0] & mask_h:
+                errmsg.append(f'U+{code:04X}: not hwid ({font["hmtx"][name][0]}) at {src}')
+            elif 0x100000 <= code and font['hmtx'][name][0] & mask_f:
+                errmsg.append(f'U+{code:04X}: not fwid ({font["hmtx"][name][0]}) at {src}')
+        if errmsg:
+            raise ValidateException("\n".join(['Invalid advance width'] + errmsg))
         for code, name in cmap.items():
             if code < 0x10000 and 0xF0000 + code not in cmap and not ((0x2500 <= code < 0x25A0) or (0xE000 <= code < 0xF900) or font['glyf'][name].numberOfContours == 0):
-                print(f'U+{code:04X}: no italic at {src}')
-                has_error = True
+                errmsg.append(f'U+{code:04X}: no italic at {src}')
             elif (0xF0000 <= code < 0x100000) and code & 0xFFFF not in cmap:
-                print(f'U+{code:04X}: no normal at {src}')
-                has_error = True
+                errmsg.append(f'U+{code:04X}: no normal at {src}')
             elif 0x100000 <= code and code & 0xFFFF not in cmap:
-                print(f'U+{code:04X}: no hwid at {src}')
-                has_error = True
+                errmsg.append(f'U+{code:04X}: no hwid at {src}')
             elif 0x10000 <= code < 0xF0000:
-                print(f'U+{code:04X}: mistakes code {src}')
-                has_error = True
-        if has_error:
-            raise ValidateException('Code point validation error')
+                errmsg.append(f'U+{code:04X}: mistakes code {src}')
+        if errmsg:
+            raise ValidateException("\n".join(['Code point validation error'] + errmsg))
         PBAR.update(1)
     PBAR_desc('compare', 'Regular / Bold')
     for code, name in cmap_r.items():
         if code not in cmap_b:
-            print(f'U+{code:04X}: not in bold')
-            has_error = True
+            errmsg.append(f'U+{code:04X}: not in bold')
     for code, name in cmap_b.items():
         if code not in cmap_r:
-            print(f'U+{code:04X}: not in regular')
-            has_error = True
-    if has_error:
-        raise ValidateException('Comparison error')
+            errmsg.append(f'U+{code:04X}: not in regular')
+    if errmsg:
+        raise ValidateException("\n".join(['Comparison error'] + errmsg))
     PBAR.update(1)
 
 
@@ -165,16 +159,14 @@ def out_webfont(src, files):
     for num, head in files.items():
         PBAR_desc('convert', f'{head}.ttf')
         run(['pyftsubset',
-            f'{DIST}/nohint/{src}',
+            f'{DIST}/hinted/{src}',
             f'--font-number={num}',
-            '--with-zopfli',
             f'--output-file={DIST}/{head}.ttf',
             '--unicodes=*',
             '--layout-features=*',
             '--notdef-glyph',
             '--notdef-outline',
             '--recommended-glyphs',
-            '--no-hinting'
             ], stdout=DEVNULL)
         PBAR.update(1)
         PBAR_desc('convert', f'{head}.woff')
@@ -189,7 +181,6 @@ def out_webfont(src, files):
             '--notdef-glyph',
             '--notdef-outline',
             '--recommended-glyphs',
-            '--no-hinting'
             ], stdout=DEVNULL)
         PBAR.update(1)
         PBAR_desc('convert', f'{head}.woff2')
@@ -197,14 +188,12 @@ def out_webfont(src, files):
             f'{DIST}/{head}.ttf',
             f'--font-number={num}',
             '--flavor=woff2',
-            '--with-zopfli',
             f'--output-file={DIST}/{head}.woff2',
             '--unicodes=*',
             '--layout-features=*',
             '--notdef-glyph',
             '--notdef-outline',
             '--recommended-glyphs',
-            '--no-hinting'
             ], stdout=DEVNULL)
         PBAR.update(1)
 
@@ -229,16 +218,18 @@ def do_webfont(*ttc):
 
 
 def o(family_name, style):
-    style_for_full = ('', ' Italic', ' Bold', ' BoldItalic')
+    style_full = ('', ' Italic', ' Bold', ' Bold Italic')
+    style_ps = ('Regular', 'Italic', 'Bold', 'BoldItalic')
     itan = - math.atan(0.1875) * 180 / math.pi
-    full_name = f'{family_name}{style_for_full[style]}'
+    full_name = f'{family_name}{style_full[style]}'
+    ps_name = f'{family_name.replace(" ", "-")}-{style_ps[style]}'
     build_date = datetime.date.today().isoformat()
     return {
         1: family_name,
         2: ('Regular', 'Italic', 'Bold', 'Bold Italic')[style],
         3: f'Google:{full_name}:{build_date}',
         4: full_name,
-        6: full_name.replace(' ', '-'),
+        6: ps_name,
         'fsSelection':      (0x40, 0x01, 0x20, 0x21)[style],
         'italicAngle':      ( 0.0, itan,  0.0, itan)[style],
         'macStyle':         (   0,    2,    1,    3)[style],
@@ -249,7 +240,7 @@ def o(family_name, style):
 
 
 def main():
-    global PBAR
+    global PBAR, args
     parser = argparse.ArgumentParser()
     parser.add_argument('--release', action='store_true', help='Build webfont')
     args = parser.parse_args()
@@ -322,8 +313,9 @@ def main():
         for x in glob.glob(f'{DIST}/*.ttf'):
             os.remove(x)
     except ValidateException:
+        PBAR.close()
         print(sys.exc_info()[1])
-    finally:
+    else:
         PBAR.close()
 
 
