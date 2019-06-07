@@ -6,30 +6,16 @@ Illusion
 最近の更新内容
 -----------------------------------------------------------------------
 
-
 詳細は [CHANGELOG.md](https://github.com/tomonic-x/Illusion/blob/master/CHANGELOG.md) をご覧ください。
+
+* 2019-06-07 **v0.2.5**
+
+    + Fix: U+2527, Hinting
 
 * 2019-06-06 **v0.2.4**
 
     + Fix: Decompose U+00BC-BE, U+0410, U+0450, U+2460-2473
     + Update: Build webfont from hinted
-
-* 2019-06-05 **v0.2.3**
-
-    + Fix: Several code point and advance width mistakes
-
-* 2019-06-04 **v0.2.2**
-
-    + Update: Add full-width glyphs for unicode
-    + Fix: typo `*.tff` -> `*.ttf`
-
-* 2019-06-03 **v0.2.1**
-
-    + Add: Generate .woff2, .woff, .ttf for Web Font
-
-* 2019-06-02 **v0.2**
-
-    + Update: Implements all JIS X 0208 Ambiguous glyphs
 
 
 特徴
@@ -127,11 +113,6 @@ Unicode の East Asian Width の *曖昧 (Ambiguous)* と *中立 (Neutral)* に
 FontLink で組み合わせると、文字が被ります。
 
 
-TODO
------------------------------------------------------------------------
-+ ヒンティングの調整。（罫線素片とブロック要素、小文字の `g` など）
-
-
 既知の問題
 -----------------------------------------------------------------------
 
@@ -168,7 +149,6 @@ TODO
 2. `src/Illusion-*.ttf` に TrueType フォントを出力。
     + オプションは「OpenTypeの仕様」のみチェック。
 3. `python build.py` を実行して `dist/` に生成。
-    + ttfautohint 用の `src/Illusion-*-ctrl.txt` はまだダミーです。
 
 
 ライセンス
