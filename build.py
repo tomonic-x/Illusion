@@ -60,24 +60,37 @@ def do_validate(regular, bold):
 
 
 # copy nohint, make hinted
-def do_preprocess(src, nohint, hinted, ctrl):
+def do_preprocess(src):
+    nohint = f'{src}-nohint.ttf'
+    hinted = f'{src}-hinted.ttf'
+    ctrl = f'{src}-ctrl.txt'
     PBAR_desc('hinting', hinted)
-    run(['cp', f'{SRC}/{src}', f'{DIST}/{nohint}'], stdout=DEVNULL)
+    run(['cp', f'{SRC}/{src}.ttf', f'{DIST}/{nohint}'], stdout=DEVNULL)
     run(['ttfautohint',
-         '--hinting-range-min=6',
-         '--hinting-range-max=48',
+         '--hinting-range-min=10',
+         '--hinting-range-max=32',
          '--increase-x-height=0',
          '--x-height-snapping-exceptions=',
          '--fallback-stem-width=64',
          '--default-script=latn',
          '--fallback-script=none',
-         '--stem-width-mode=qqq',
+         '--stem-width-mode=nnn',
          '--windows-compatibility',
          f'--control-file={SRC}/{ctrl}',
          '--no-info',
-        f'{DIST}/{nohint}',
+        f'{SRC}/{src}.ttf',
         f'{DIST}/{hinted}',
     ], stdout=DEVNULL)
+    PBAR.update(1)
+    PBAR_desc('dehint', hinted)
+    font = TTFont(f'{DIST}/{hinted}')
+    cmap = font.getBestCmap()
+    glyf = font['glyf']
+    for x in range(0x2500, 0x25A0):
+        glyf[cmap[x]].removeHinting()
+    for x in range(0x102500, 0x1025A0):
+        glyf[cmap[x]].removeHinting()
+    font.save(f'{DIST}/{hinted}')
     PBAR.update(1)
 
 
@@ -198,25 +211,6 @@ def out_webfont(src, files):
         PBAR.update(1)
 
 
-def do_webfont(*ttc):
-    out_webfont(f'{FAMILY}-Regular.ttc', {
-        0: f'webfont/{FAMILY}-N-Regular',
-        1: f'webfont/{FAMILY}-N-Italic',
-        2: f'webfont/{FAMILY}-W-Regular',
-        3: f'webfont/{FAMILY}-W-Italic',
-        4: f'webfont/{FAMILY}-Z-Regular',
-        5: f'webfont/{FAMILY}-Z-Italic',
-    })
-    out_webfont(f'{FAMILY}-Bold.ttc', {
-        0: f'webfont/{FAMILY}-N-Bold',
-        1: f'webfont/{FAMILY}-N-BoldItalic',
-        2: f'webfont/{FAMILY}-W-Bold',
-        3: f'webfont/{FAMILY}-W-BoldItalic',
-        4: f'webfont/{FAMILY}-Z-Bold',
-        5: f'webfont/{FAMILY}-Z-BoldItalic',
-    })
-
-
 def o(family_name, style):
     style_full = ('', ' Italic', ' Bold', ' Bold Italic')
     style_ps = ('Regular', 'Italic', 'Bold', 'BoldItalic')
@@ -244,7 +238,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--release', action='store_true', help='Build webfont')
     args = parser.parse_args()
-    total = 73 if args.release else 37
+    total = 75 if args.release else 38
     PBAR = tqdm(total=total, leave=False, bar_format="{desc} {percentage:3.0f}%|{bar}|{n_fmt}/{total_fmt}")
     try:
         do_validate(
@@ -254,18 +248,8 @@ def main():
         run(['mkdir', '-p', f'{DIST}/nohint'], stdout=DEVNULL)
         run(['mkdir', '-p', f'{DIST}/hinted'], stdout=DEVNULL)
         run(['mkdir', '-p', f'{DIST}/webfont'], stdout=DEVNULL)
-        do_preprocess(
-            f'{FAMILY}-Regular.ttf',
-            f'{FAMILY}-Regular-nohint.ttf',
-            f'{FAMILY}-Regular-hinted.ttf',
-            f'{FAMILY}-Regular-ctrl.txt',
-        )
-        do_preprocess(
-            f'{FAMILY}-Bold.ttf',
-            f'{FAMILY}-Bold-nohint.ttf',
-            f'{FAMILY}-Bold-hinted.ttf',
-            f'{FAMILY}-Bold-ctrl.txt',
-        )
+        do_preprocess(f'{FAMILY}-Regular')
+        do_preprocess(f'{FAMILY}-Bold')
         options = {
             'src':  f'{DIST}/{FAMILY}-Regular-nohint.ttf',
             'dst':  f'{DIST}/nohint/{FAMILY}-Regular.ttc',
@@ -305,11 +289,22 @@ def main():
         })
         do_build(options)
         if args.release:
-            do_webfont(
-                f'{DIST}/nohint/{FAMILY}-Regular.ttc',
-                f'{DIST}/nohint/{FAMILY}-Bold.ttc',
-            )
-            PBAR.update(1)
+            out_webfont(f'{FAMILY}-Regular.ttc', {
+                0: f'webfont/{FAMILY}-N-Regular',
+                1: f'webfont/{FAMILY}-N-Italic',
+                2: f'webfont/{FAMILY}-W-Regular',
+                3: f'webfont/{FAMILY}-W-Italic',
+                4: f'webfont/{FAMILY}-Z-Regular',
+                5: f'webfont/{FAMILY}-Z-Italic',
+            })
+            out_webfont(f'{FAMILY}-Bold.ttc', {
+                0: f'webfont/{FAMILY}-N-Bold',
+                1: f'webfont/{FAMILY}-N-BoldItalic',
+                2: f'webfont/{FAMILY}-W-Bold',
+                3: f'webfont/{FAMILY}-W-BoldItalic',
+                4: f'webfont/{FAMILY}-Z-Bold',
+                5: f'webfont/{FAMILY}-Z-BoldItalic',
+            })
         for x in glob.glob(f'{DIST}/*.ttf'):
             os.remove(x)
     except ValidateException:
