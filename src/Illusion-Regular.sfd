@@ -4,7 +4,7 @@ FullName: Illusion
 FamilyName: Illusion
 Weight: Regular
 Copyright: Copyright 2015 Google Inc. All Rights Reserved.
-Version: 0.2.4
+Version: 0.2.5
 ItalicAngle: 0
 UnderlinePosition: -205
 UnderlineWidth: 102
@@ -21,7 +21,7 @@ OS2Version: 4
 OS2_WeightWidthSlopeOnly: 0
 OS2_UseTypoMetrics: 0
 CreationTime: 1547278235
-ModificationTime: 1559820435
+ModificationTime: 1559889604
 PfmFamily: 49
 TTFWeight: 400
 TTFWidth: 5
@@ -89,12 +89,12 @@ NameList: AGL For New Fonts
 DisplaySize: -48
 AntiAlias: 1
 FitToEm: 1
-WinInfo: 368 16 6
+WinInfo: 0 16 6
 BeginPrivate: 0
 EndPrivate
 Grid
-1024 1918 m 21
- 1024 -448 l 1029
+1024 1918 m 17
+ 1024 -448 l 1025
 1536 -480 m 1
  1024 -480 l 1
  960 -544 l 1
@@ -183,10 +183,6 @@ Grid
  -256 0 l 1
  -288 0 l 1
  -288 -128 l 1025
-768 -1408 m 25
- 1280 2688 l 1025
--256 -1408 m 25
- 256 2688 l 1025
 -576 774 m 25
  -368 774 l 1025
 -128 704 m 25
@@ -13715,21 +13711,11 @@ Flags: W
 LayerCount: 2
 Fore
 SplineSet
-0 -3095 m 5,0,-1
- 1024 -3095 l 5,1,-1
- 1024 -3096 l 5,2,-1
- 0 -3096 l 5,3,-1
- 0 -3095 l 5,0,-1
-0 3095 m 1,4,-1
- 1024 3095 l 1,5,-1
- 1024 3094 l 1,6,-1
- 0 3094 l 1,7,-1
- 0 3095 l 1,4,-1
-0 776 m 1,8,-1
- 1024 776 l 1,9,-1
- 1024 696 l 1,10,-1
- 0 696 l 1,11,-1
- 0 776 l 1,8,-1
+0 776 m 5,0,-1
+ 1024 776 l 5,1,-1
+ 1024 696 l 5,2,-1
+ 0 696 l 5,3,-1
+ 0 776 l 5,0,-1
 EndSplineSet
 Validated: 1
 Substitution2: "'fwid' Full Widths in Latin lookup 0 subtable" u102500
@@ -14587,6 +14573,7 @@ SplineSet
  412 -576 l 1,9,-1
  412 696 l 1,0,-1
 EndSplineSet
+Validated: 1
 EndChar
 
 StartChar: uni2528
