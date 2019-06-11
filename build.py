@@ -238,7 +238,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--release', action='store_true', help='Build webfont')
     args = parser.parse_args()
-    total = 75 if args.release else 38
+    total = 75 if args.release else 39
     PBAR = tqdm(total=total, leave=False, bar_format="{desc} {percentage:3.0f}%|{bar}|{n_fmt}/{total_fmt}")
     try:
         do_validate(

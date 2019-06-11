@@ -1,2 +1,1 @@
 # Illusion-Regular-ctrl.txt
-none dflt @ 74 # U+0067 g
